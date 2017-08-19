@@ -32,6 +32,9 @@ describe('Products', () => {
         "brand": "VERY HI FI BRAND",
         "isAvailable": true
     };
+    before((done) => {
+        setTimeout(done, 2000);//hack to add delay for bootstrapping to get completed
+    });
     before((done) => { //Before any test we will create a auth token
         const loginDetails = {
             loginId: bootstrapAdmin[0].phoneNumber,
