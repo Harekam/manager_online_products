@@ -15,18 +15,19 @@ exports.bootstrapAdmin = function (callbackParent) {
 };
 
 function insertData(adminData, callbackParent) {
-    const password = adminData.password;
+    let password = adminData.password;
     async.waterfall([
         function (callback) {
             util.cryptData(password, callback);
         },
         function (result, callback) {
-            Services.adminService.getAdminDataByEmail(Object.assign({password}, adminData), callback);
+            password = result;
+            Services.adminService.getAdminDataByEmail(adminData, callback);
         },
         function (result, callback) {
             if (!util.isEmpty(result))
                 return callback(null);
-            Services.adminService.addNewAdmin(adminData, function (error) {
+            Services.adminService.addNewAdmin(Object.assign({}, adminData, {password}), function (error) {
                 if (error)
                     logger.error("Bootstrapping error for " + adminData.phoneNumber);
                 else
