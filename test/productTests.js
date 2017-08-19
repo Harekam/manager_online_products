@@ -33,7 +33,7 @@ describe('Products', () => {
         "isAvailable": true
     };
     before((done) => {
-        setTimeout(done, 5000);//hack to add delay for bootstrapping to get completed
+        setTimeout(done, 20000);//hack to add delay for bootstrapping to get completed
     });
     before((done) => { //Before any test we will create a auth token
         const loginDetails = {
