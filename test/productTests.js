@@ -33,7 +33,7 @@ describe('Products', () => {
         "isAvailable": true
     };
     before((done) => {
-        setTimeout(done, 2000);//hack to add delay for bootstrapping to get completed
+        setTimeout(done, 5000);//hack to add delay for bootstrapping to get completed
     });
     before((done) => { //Before any test we will create a auth token
         const loginDetails = {
@@ -44,7 +44,6 @@ describe('Products', () => {
             .post('/api/v1/admin/login')
             .send(loginDetails)
             .end((err, res) => {
-                console.log(res.body);
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('message');

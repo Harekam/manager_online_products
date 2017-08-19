@@ -4,7 +4,7 @@
   "description": "Services for managing different products in an online store",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --timeout 10000"
+    "test": "mocha --timeout 20000"
   },
   "author": "Harekam Singh",
   "license": "ISC",
