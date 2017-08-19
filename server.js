@@ -7,6 +7,7 @@ const Hapi = require('hapi'),
     Plugins = require('./Plugins'),
     mongoose = require('mongoose'),
     bootstrap = require('./Utilities/bootstrap'),
+    async = require('async'),
     Routes = require('./Routes');
 //mongoose.set('debug', true);
 
@@ -51,25 +52,43 @@ function _init() {
 
 //Connect to MongoDB
 mongoose.Promise = global.Promise; //mongoose warning fix
-mongoose.connect(MONGO_DB_URI, (err) => {
-    if (err) {
-        server.log("DB Error: ", err);
-        process.exit(1);
-    } else {
-        server.log('MongoDB Connected at', MONGO_DB_URI);
-    }
-});
-// Start the server
-server.start((err) => {
+async.auto({
+    db: (callback) => {
+        mongoose.connect(MONGO_DB_URI, (err) => {
+            if (err) {
+                server.log("DB Error: ", err);
+                return callback(err);
+            }
+            server.log('MongoDB Connected at', MONGO_DB_URI);
+            return callback(null);
+        });
+    },
+    bootstrap: ['db', (results, callback) => {
+        bootstrap.bootstrapAdmin(function (err) {
+            if (err) {
+                server.log('Bootstrap error', err);
+                return callback(err);
+            }
+            server.log('Bootstrap', 'success');
+            return callback(null);
+        });
+    }],
+    initServer: ['bootstrap', (results, callback) => {
+        // Start the server
+        server.start((err) => {
+            if (err) {
+                return callback(err);
+            }
+            server.log('Server running at:', server.info.uri);
+            return callback(null);
+        });
+    }]
+}, (err) => {
     if (err) {
         throw err;
     }
-    server.log('Server running at:', server.info.uri);
 });
-bootstrap.bootstrapAdmin(function (err) {
-    if (err)
-        server.log('Bootstrap error', err);
-});
+
 const preResponse = function (request, reply) {
 
     const response = request.response;
