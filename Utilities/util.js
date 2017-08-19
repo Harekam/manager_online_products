@@ -29,6 +29,7 @@ function failActionFunction(request, reply, source, error) {
         let details = error.data.details[0];
         if (details.message.indexOf("pattern") > -1 && details.message.indexOf("required") > -1 && details.message.indexOf("fails") > -1) {
             error.output.payload.message = "Invalid " + details.path;
+            error.output.payload.statusCode = 0;
             return reply(error);
         }
     }
@@ -42,10 +43,11 @@ function failActionFunction(request, reply, source, error) {
     customErrorMessage = customErrorMessage.replace('[', '');
     customErrorMessage = customErrorMessage.replace(']', '');
     error.output.payload.message = customErrorMessage;
+    error.output.payload.statusCode = 0;
     error.output.payload.data = {};
     delete error.output.payload.validation;
     delete error.output.payload.error;
-    delete error.output.payload.statusCode;
+    //delete error.output.payload.statusCode;
     return reply(error);
 }
 

@@ -5,8 +5,8 @@ const constants = config.CONSTANTS;
 const REGEX = constants.REGEX;
 const util = require('../Utilities/util');
 const Joi = require('joi');
-const DefaultResponse = config.RESPONSE_MESSAGES.DefaultResponse;
 const tags = ['api', 'user'];
+const adminResponses = require('./adminResponses');
 
 const registerAdmin = {
     method: 'POST',
@@ -44,7 +44,7 @@ const registerAdmin = {
         },
         plugins: {
             'hapi-swagger': {
-                responses: new DefaultResponse()
+                responses: adminResponses.registerSuccessResponse
             }
         }
 
@@ -81,7 +81,7 @@ const loginAdmin = {
         },
         plugins: {
             'hapi-swagger': {
-                responses: new DefaultResponse()
+                responses: adminResponses.loginSuccessResponse
             }
         }
 

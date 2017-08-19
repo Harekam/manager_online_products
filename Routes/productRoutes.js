@@ -10,6 +10,7 @@ const Joi = require('joi');
 const DefaultResponse = config.RESPONSE_MESSAGES.DefaultResponse;
 const REGEX = constants.REGEX;
 const tags = ['api', 'admin', 'product'];
+const productResponses = require('./productResponses');
 
 const addProduct = {
     method: 'POST',
@@ -50,7 +51,7 @@ const addProduct = {
         },
         plugins: {
             'hapi-swagger': {
-                responses: new DefaultResponse()
+                responses: productResponses.createProductSuccessResponse
             }
         }
 
@@ -179,7 +180,7 @@ const getProduct = {
         },
         plugins: {
             'hapi-swagger': {
-                responses: new DefaultResponse()
+                responses: productResponses.getProductSuccessResponse
             }
         }
 
