@@ -1,0 +1,10 @@
+[
+  {
+    "email": "harekamsingh@gmail.com",
+    "password": "qwerty",
+    "phoneNumber": "7503040410",
+    "firstName": "Harekam",
+    "lastName": "Singh",
+    "userRole": "SUPER_ADMIN"
+  }
+]

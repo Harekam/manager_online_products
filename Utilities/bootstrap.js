@@ -10,25 +10,18 @@ const log4js = require('log4js');
 const logger = log4js.getLogger('[BOOTSTRAP]');
 
 exports.bootstrapAdmin = function (callbackParent) {
-    const adminData = [{
-        email: 'harekamsingh@gmail.com',
-        password: "qwerty",
-        phoneNumber: "7503040410",
-        firstName: 'Harekam',
-        lastName: 'Singh',
-        userRole: Config.CONSTANTS.USER_ROLE.SUPER_ADMIN
-    }];
+    const adminData = Config.bootstrapAdmin;
     async.each(adminData, insertData, callbackParent);
 };
 
 function insertData(adminData, callbackParent) {
+    const password = adminData.password;
     async.waterfall([
         function (callback) {
-            util.cryptData(adminData.password, callback);
+            util.cryptData(password, callback);
         },
         function (result, callback) {
-            adminData.password = result;
-            Services.adminService.getAdminDataByEmail(adminData, callback);
+            Services.adminService.getAdminDataByEmail(Object.assign({password}, adminData), callback);
         },
         function (result, callback) {
             if (!util.isEmpty(result))

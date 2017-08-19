@@ -48,6 +48,7 @@ function _init() {
         }
     });
 }
+
 //Connect to MongoDB
 mongoose.Promise = global.Promise; //mongoose warning fix
 mongoose.connect(MONGO_DB_URI, (err) => {
@@ -88,3 +89,4 @@ const preResponse = function (request, reply) {
 };
 
 server.ext('onPreResponse', preResponse);
+module.exports = server;

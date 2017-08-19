@@ -58,7 +58,7 @@ const addProduct = {
 };
 const updateProduct = {
     method: 'PUT',
-    path: '/api/v1/product',
+    path: '/api/v1/product/{productId}',
     config: {
         auth: 'adminAuth',
         description: 'update product',
@@ -69,7 +69,7 @@ const updateProduct = {
             productController.updateProduct({
                 userData,
                 accessToken
-            }, request.payload, (error, success) => {
+            }, Object.assign({}, request.payload, request.params), (error, success) => {
 
                 if (error)
                     return reply(error.response).code(error.statusCode);
@@ -80,8 +80,10 @@ const updateProduct = {
         },
         validate: {
             headers: util.authorizeHeaderObject,
+            params: {
+                productId: Joi.string().required().trim().regex(REGEX.OBJECT_ID)
+            },
             payload: {
-                productId: Joi.string().required().trim().regex(REGEX.OBJECT_ID),
                 productName: Joi.string().optional().trim(),
                 description: Joi.string().optional().trim(),
                 totalStock: Joi.number().optional().integer(),
@@ -104,7 +106,7 @@ const updateProduct = {
 };
 const deleteProduct = {
     method: 'DELETE',
-    path: '/api/v1/product',
+    path: '/api/v1/product/{productId}',
     config: {
         auth: 'adminAuth',
         description: 'delete product',
@@ -115,7 +117,7 @@ const deleteProduct = {
             productController.deleteProduct({
                 userData,
                 accessToken
-            }, request.payload, (error, success) => {
+            }, request.params, (error, success) => {
 
                 if (error)
                     return reply(error.response).code(error.statusCode);
@@ -126,7 +128,7 @@ const deleteProduct = {
         },
         validate: {
             headers: util.authorizeHeaderObject,
-            payload: {
+            params: {
                 productId: Joi.string().required().trim().regex(REGEX.OBJECT_ID)
             },
             failAction: util.failActionFunction

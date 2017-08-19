@@ -77,7 +77,7 @@ function loginAdmin(userDetails, payload, callbackRoute) {
         },
         (err, results) => {
             if (err) return callbackRoute(util.createErrorResponse(err));
-            return callbackRoute(null, util.createSuccessResponse(SUCCESS_MESSAGES.REGISTRATION_SUCCESSFUL, STATUS_CODE.CREATED, {
+            return callbackRoute(null, util.createSuccessResponse(SUCCESS_MESSAGES.LOGIN_SUCCESSFULLY, STATUS_CODE.OK, {
                 accessToken: results.token
             }));
         });

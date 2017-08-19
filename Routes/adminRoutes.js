@@ -63,7 +63,7 @@ const loginAdmin = {
             adminController.loginAdmin({
                 userData,
                 accessToken
-            }, request.query, (error, success) => {
+            }, request.payload, (error, success) => {
 
                 if (error)
                     return reply(error.response).code(error.statusCode);
@@ -73,7 +73,7 @@ const loginAdmin = {
             });
         },
         validate: {
-            query: {
+            payload: {
                 loginId: Joi.string().required().trim().description("email or phone number"),
                 password: Joi.string().required().trim().min(constants.PASSWORD_MIN_LEN).max(constants.PASSWORD_MAX_LEN)
             },

@@ -4,10 +4,11 @@
 'use strict';
 const Inert = require('inert'),
     Vision = require('vision');
-module.exports = [
+const modules = [
     {register: require('./auth-token')},
     Inert,
     Vision,
-    {register: require('./swagger')},
-    {register: require('./good-console')}
+    {register: require('./swagger')}
 ];
+if (process.env.NODE_ENV !== "test") modules.push({register: require('./good-console')});
+module.exports = modules;
