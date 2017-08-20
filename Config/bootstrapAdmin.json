@@ -1,10 +1,10 @@
 [
   {
-    "email": "harekamsingh@gmail.com",
+    "email": "manager@product.com",
     "password": "qwerty",
-    "phoneNumber": "7503040410",
-    "firstName": "Harekam",
-    "lastName": "Singh",
+    "phoneNumber": "1234567890",
+    "firstName": "Manager",
+    "lastName": "Online",
     "userRole": "SUPER_ADMIN"
   }
 ]

@@ -11,12 +11,14 @@ const DefaultResponse = config.RESPONSE_MESSAGES.DefaultResponse;
 const REGEX = constants.REGEX;
 const tags = ['api', 'admin', 'product'];
 const productResponses = require('./productResponses');
+const notes = 'auth token should be in pattern(without quotes): "bearer access_token"';
 
 const addProduct = {
     method: 'POST',
     path: '/api/v1/product',
     config: {
         auth: 'adminAuth',
+        notes,
         description: 'add product',
         tags,
         handler: (request, reply) => {
@@ -62,6 +64,7 @@ const updateProduct = {
     path: '/api/v1/product/{productId}',
     config: {
         auth: 'adminAuth',
+        notes,
         description: 'update product',
         tags,
         handler: (request, reply) => {
@@ -110,6 +113,7 @@ const deleteProduct = {
     path: '/api/v1/product/{productId}',
     config: {
         auth: 'adminAuth',
+        notes,
         description: 'delete product',
         tags,
         handler: (request, reply) => {
@@ -147,6 +151,7 @@ const getProduct = {
     path: '/api/v1/product',
     config: {
         auth: 'adminAuth',
+        notes,
         description: 'get product',
         tags,
         handler: (request, reply) => {

@@ -19,7 +19,7 @@ const admin = new Schema({
     },
     accessToken: {
         type: String,
-        required: false //TODO add partial index
+        required: false
     },
     password: {
         type: String,
@@ -66,6 +66,14 @@ const admin = new Schema({
     }
 }, {
     timestamps: true
+});
+
+admin.index({
+    accessToken: 1
+}, {
+    unique: true, partialFilterExpression: {
+        accessToken: {$exists: true}
+    }
 });
 
 module.exports = mongoose.model('admin', admin);

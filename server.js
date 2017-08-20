@@ -28,7 +28,7 @@ server.register(Plugins, function (err) {
     if (err) {
         server.error('Error while loading Plugins : ' + err)
     } else {
-        server.log('info', 'Plugins Loaded')
+        server.log('info', 'Plugins Loaded');
         _init();
     }
 

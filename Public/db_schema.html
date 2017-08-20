@@ -1,0 +1,587 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<!DOCTYPE html>
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml' >
+<head>
+<title>db&#95;schema&#95;manager&#95;online&#95;products</title>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>-->
+<link rel="shortcut icon" href="http://www.dbschema.com/images/favicon.ico">
+<style type='text/css'>
+body {
+    font-family: 'Segoe UI', 'Lucida sans', Dialog;
+    font-size: 13px;
+    background-color:#f5f5f5;
+    margin: 10px;
+}
+</style>
+</head>
+
+<body>
+<div class='svg-container'>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' text-rendering='optimizeLegibility'   width='512' height='542' viewbox='0 0 512 542' >
+  <script type='text/ecmascript'>
+  <![CDATA[
+  function hghl(el) { for ( var i in el ){ var elem = document.getElementById(el[i]); if ( elem != null ) elem.setAttribute('class','highlight');  }  }
+  function uhghl(el) { for ( var i in el ){ var elem = document.getElementById(el[i]); if ( elem != null ) elem.setAttribute('class','scene'); }  } 
+  ]]>
+  </script> 
+
+<style type='text/css'>
+  text                { fill:#000000; font-family: Trebuchet MS, 'Trebuchet MS', Dialog; font-size:12px; }
+  a text:hover        { fill:#94025f; text-shadow: 0px 0px 6px #d0ce00; }
+  text.highlight      { fill:#94025f; text-shadow: 0px 0px 4px #eac533; }
+  text.colType        { fill:#b3b3b3; }
+  text.relName        { fill:#b09c7c; }
+  path                { stroke:#5c554f; stroke-width:1.15; fill:none; }
+  path.virtual        { stroke:#b7642d; }
+  path.dotted         { stroke-dasharray:4,2; }
+  path.scene          { stroke-width:10; opacity:0;}
+  path.highlight      { stroke-width:5; stroke:#eac533; opacity:0.6;}
+  rect.entity         { fill:#ffffff; stroke:#aaa; stroke-width:1;shape-rendering:crispEdges;filter:url(#shadow); }
+  line.delim          { stroke-width:1; shape-rendering:crispEdges; }
+  text.callout        { fill:#000000; font-family: Trebuchet MS, 'Trebuchet MS', Dialog; font-size:12px; }
+  rect.callout        { fill:url(#calloutGradient); stroke:#bebdbd; stroke-width:0.5; filter: url(#shadow);}
+  rect.grp            { stroke:#b1b1b1; stroke-width:1.7; opacity:0.8; }
+</style>
+<defs>
+  <pattern id='layoutBgA' patternUnits='userSpaceOnUse'  width='10' height='20' x='0' y='0' viewBox='0 0 5 10'>  
+     <line x1='-2' y1='1' x2='7' y2='10' stroke='#f3f3f3' stroke-width='.5'/>  
+     <line x1='-2' y1='6' x2='7' y2='15' stroke='#f3f3f3' stroke-width='.5'/>  
+     <line x1='-2' y1='-4' x2='7' y2='5' stroke='#f3f3f3' stroke-width='.5'/>  
+  </pattern>  
+  <radialGradient id='layoutBgB' gradientUnits='userSpaceOnUse' cx='50%' cy='50%' r='75%' fx='46%' fy='22%'>
+     <stop offset='0%' stop-opacity='.2' stop-color='#f5f5f5' />  
+     <stop offset='100%' stop-color='#efefef' />  
+  </radialGradient>
+  <pattern id='layoutBgTr' patternUnits='userSpaceOnUse'  width='300' height='300' x='0' y='0' viewBox='0 0 300 300'>  
+    <text x='-55' y='200' transform='rotate(-45)' style='font-family:Arial;font-size:48px;font-weight:bold;fill:#e7e7e7;'>&#84;&#82;&#73;&#65;&#76;</text> 
+    <text x='-130' y='230' transform='rotate(-45)' style='font-family:Arial;font-size:24px;font-weight:bold;fill:#e7e7e7;'>&#77;ove &#116;he m&#111;use &#111;ver &#116;ables</text> 
+    <text x='-85' y='250' transform='rotate(-45)' style='font-family:Arial;font-size:24px;font-weight:bold;fill:#e7e7e7;'>&#116;o re&#97;d &#116;he c&#111;mmen&#116;s</text> 
+  </pattern>  
+  <linearGradient id='groupUnderTitleLine' x1='0%' y1='0%' x2='100%' y2='0%' >
+          <stop offset='0%' stop-color='#999999' stop-opacity='0.7'/> 
+          <stop offset='100%' stop-color='#999999' stop-opacity='0' /> 
+   </linearGradient>
+  <radialGradient id='calloutGradient' cx='25%' cy='20%' r='80%' fx='10%' fy='10%'>
+	   <stop offset='0%' stop-color='#ffffff' />
+    <stop offset='100%' stop-color='#f8f6d1' />
+  </radialGradient>
+  <filter id='shadow' width='120%' height='120%'> 
+      <feOffset result='offOut' in='SourceGraphic' dx='1' dy='1' /> 
+      <feColorMatrix result='matrixOut' in='offOut' type='matrix' 
+      values='0.1 0 0 0 0 0 0.1 0 0 0 0 0 0.1 0 0 0 0 0 0.3 0' /> 
+      <feGaussianBlur result='blurOut' in='matrixOut' stdDeviation='3' /> 
+      <feBlend in='SourceGraphic' in2='blurOut' mode='normal' /> 
+    </filter> 
+  <filter id='fkShadow' height='130%'> 
+    <feGaussianBlur in='SourceAlpha' stdDeviation='1.5'/> <!-- stdDeviation is how much to blur -->
+    <feOffset dx='1.2' dy='1.2' result='offsetblur'/> <!-- how much to offset -->
+    <feMerge>
+    <feMergeNode/> <!-- this contains the offset blurred image -->
+    <feMergeNode in='SourceGraphic'/> <!-- this contains the element that the filter is applied to -->
+    </feMerge>
+  </filter>
+  <radialGradient id='legendGradient' fx='5%' fy='5%' r='75%' spreadMethod='pad'>
+          <stop offset='0%' stop-color='#eefbf2' stop-opacity='1'/> 
+          <stop offset='100%' stop-color='#cff9cb' stop-opacity='1' /> 
+   </radialGradient>
+  <symbol id='calloutArrowDown' overflow='visible' >
+      <path d='M 0,0 L 8,12 L 16,0 z' style='fill:#f8f6d1;stroke:none; filter: url(#shadow);' />
+      <path d='M 0,0 L 8,12 L 16,0' style='stroke:#bebdbd; stroke-width:0.5;' />
+  </symbol>
+  <symbol id='calloutArrowUp' overflow='visible' >
+      <path d='M 0,16 L 8,4 L 16,16 z' style='fill:#ffffff; stroke:none; filter: url(#shadow);' />
+      <path d='M 0,16 L 8,4 L 16,16' style='stroke:#bebdbd; stroke-width:0.5;' />
+  </symbol>
+  <symbol id='pk' overflow='visible' >
+    <g transform='scale(0.99)'>
+     <path style='fill:#fffa7d;stroke:#765f03;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;'
+        d='M 9.3678877,3.5695485 C 9.1030218,3.2729386 9.0796382,2.7628519 9.3396185,2.4517097 9.5449651,2.1956495 9.9040386,2.0980533 10.199638,2.2169415 10.533525,2.3415459 10.775153,2.706942 10.750675,3.0842709 10.737029,3.3980003 10.541153,3.699122 10.258248,3.8066067 9.966649,3.9250429 9.6169668,3.8418805 9.4008073,3.6062324 9.3894892,3.5943518 9.3785264,3.582104 9.3678886,3.5695487 z M 11.226617,6.9916004 C 11.888137,6.3548946 12.293488,5.4172188 12.311087,4.442353 12.378144,2.7379364 11.248678,1.0541269 9.7322318,0.44767357 8.3887112,-0.1280313 6.7865012,0.26822889 5.8918395,1.4007929 5.080823,2.3839145 4.9336815,3.8452096 5.3635544,5.101615 L 4.3670905,5.315913 C 4.0664984,5.3682645 4.0967703,5.6316724 4.2574957,5.8208829 L 4.9124,6.5655244 4.1543436,7.2512357 3.2136002,7.2163506 3.1674775,8.5586827 2.0406832,8.5086512 1.5965306,8.9299953 1.5471661,10.179833 0.75616674,10.195223 0.2112857,10.758575 0.15354288,11.735988 0.07199052,12.765553 c 0.36440953,0.238225 0.79006967,0.195492 1.44938278,-0.02675 L 6.3033562,8.1282037 6.8217102,8.6765688 C 6.9985465,8.8799427 7.3003699,8.7497574 7.358381,8.5016252 L 7.4938877,7.5084164 c 0.8537488,0.3985387 1.8303125,0.4711541 2.6851793,0.1427713 0.393927,-0.1407258 0.746858,-0.3701772 1.04755,-0.6595873 z'/>
+     <path d='M 6.8014948,6.3102123 0.15369063,13.024481 0.21560535,12.141962 6.0062342,6.2683782 z'
+        style='fill:#ffe5a5;fill-opacity:1;stroke:#854e31;stroke-width:0.06912433;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:3.00300009'/>
+    </g>
+  </symbol>
+  <symbol id='dist' overflow='visible' >
+    <g transform='scale(0.99)'>
+      <path style='fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;' d='M 0.177,11.431 12.28,11.449'/>
+      <path style='fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;' d='m 6.124,3.954 0.066,7.154 v 0'/>
+      <rect width='11.78' height='3.40' x='0.40' y='0.44' style='fill:#fffa7d;stroke:#765f03;stroke-width:0.6;' ry='0.83'/>
+      <rect width='11.78' height='3.40' x='0.40' y='5.609' style='fill:#fffa7d;stroke:#765f03;stroke-width:0.6;' ry='0.832'/>
+    </g>
+  </symbol>
+  <symbol id='unq' overflow='visible' >
+    <g transform='scale(0.99)'>
+      <rect style='fill:#fbea8e;stroke:#7e4d31;stroke-width:0.71934468;stroke-linecap:round;stroke-linejoin:round;'
+         width='2.29' height='8.43' x='7.48' y='-0.76' ry='1.14' transform='matrix(0.701,0.713,-0.727,0.685,0,0)' />
+      <path style='fill:white;stroke:#858585;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;'
+         d='m 26.04,8.64 a 4.13,4.13 0 1 1 -8.26,0 4.13,4.13 0 1 1 8.26,0 z'
+         transform='matrix(1.025,0,0,0.987,-14.690,-3.862)' />
+      <text x='5.8' y='7.4' style='font-size:7px;fill:#8a8a8a;'>1</text>
+    </g>
+  </symbol>
+  <symbol id='idx' overflow='visible' >
+    <g transform='scale(0.99)'>
+      <rect style='fill:#fbea8e;stroke:#7e4d31;stroke-width:0.71934468;stroke-linecap:round;stroke-linejoin:round;'
+         width='2.29' height='8.43' x='7.48' y='-0.76' ry='1.14' transform='matrix(0.701,0.713,-0.727,0.685,0,0)' />
+      <path style='fill:white;stroke:#858585;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;'
+         d='m 26.04,8.64 a 4.13,4.13 0 1 1 -8.26,0 4.13,4.13 0 1 1 8.26,0 z'
+         transform='matrix(1.025,0,0,0.987,-14.690,-3.862)' />
+    </g>
+  </symbol>
+  <symbol id='fk' overflow='visible' >
+    <g transform='scale(0.87)'>
+      <path style='fill:#f3e1b7;stroke:#7e471f;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+      d='M 12.48,0.33 7.07,0.89 9.067,2.974 0.329,11.731 1.073,12.597 9.811,3.841 11.77,5.78 z' />
+    </g>
+  </symbol>
+  <symbol id='ref' overflow='visible' >
+    <g transform='scale(0.87)'>
+      <path style='fill:#f3e1b7;stroke:#7e471f;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0.10,12.70 5.31,12.15 3.40,10.06 11.82,1.32 11.11,0.45 2.68,9.19 0.80,7.24 z'/>
+    </g>
+  </symbol>
+  <symbol id='flag0' overflow='visible' >
+    <g transform='scale(0.92)'>
+      <path style='fill:#b7d0f6;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+    </g>
+  </symbol>
+  <symbol id='flag1' overflow='visible' >
+    <g transform='scale(0.92)'>
+      <path style='fill:#f4a393;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+    </g>
+  </symbol>
+  <symbol id='flag2' overflow='visible' >
+    <g transform='scale(0.92)'>
+      <path style='fill:#77ec8b;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+    </g>
+  </symbol>
+  <symbol id='nn' overflow='visible' >
+  <path style='stroke:#9b3e50;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0,0 3,3 M 0,3 3,0 z'/>
+  </symbol>
+  <symbol id='view' overflow='visible' >
+    <g transform='scale(0.99)'>
+     <line x1='12' y1='6' x2='19' y2='0' stroke='black' stroke-width='0.5' />
+     <line x1='0' y1='6' x2='7' y2='0' stroke='black' stroke-width='0.5' />
+     <circle cx='3' cy='6' r='3' fill='#f9ebbc' stroke='black' stroke-width='0.5'/>
+     <circle cx='10' cy='6' r='3' fill='#f9ebbc' stroke='black' stroke-width='0.5'/>
+    </g>
+  </symbol>
+  <marker id='arrow01' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerUnits='strokeWidth' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+  </marker>
+  <marker id='arrow1' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerUnits='strokeWidth' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+  </marker>
+  <marker id='foot01' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerUnits='strokeWidth' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 1.60,4.00 L 3.20,4.00 L 4.80,4.00 L 6.40,4.00 z' />
+  </marker>
+  <marker id='foot0p' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerUnits='strokeWidth' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 1.60,4.00 L 3.20,4.00 L 4.80,4.00 L 6.40,4.00 z' />
+    <path d='M 0.00,0.00 L 8.00,4.00 L 0.00,8.00' />
+  </marker>
+  <marker id='foot1' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerUnits='strokeWidth' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+  </marker>
+  <marker id='foot1p' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerUnits='strokeWidth' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+    <path d='M 0.00,0.00 L 8.00,4.00 L 0.00,8.00' />
+  </marker>
+  <linearGradient id='tbg_1f5182' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#4975a1' /> 
+     <stop offset='100%' stop-color='#1f5182' /> 
+  </linearGradient>
+</defs>
+
+<!-- ============= Desktop ============= -->
+<rect x='1' y='1' width='510' height='540' rx='8' ry='8' style='fill:url(#layoutBgB); stroke:#777777; stroke-width:0.5;' />
+<rect x='1' y='1' width='510' height='540' rx='8' ry='8' style='fill:url(#layoutBgTr);' />
+<rect x='1' y='1' width='510' height='540' rx='8' ry='8' style='fill:url(#layoutBgA); stroke:#777777; stroke-width:0.5;' />
+
+<!-- ============= Legend ============= -->
+<g transform='translate(10,10)'>
+  <rect x='10' y='10' width='330' height='52' rx='6' ry='6' style='fill:url(#legendGradient);filter:url(#shadow);'/> 
+  <text x='65' y='33'>db_schema_manager_online_products</text> 
+  <text x='65' y='49' style='fill:#aaaaaa; font-size:11px;'><tspan>Read table &amp; column comments as mouse-over tooltips.</tspan></text> 
+<g transform="scale(0.75,0.75) translate(10,7)" > <a xlink:href='http://www.dbschema.com'> <rect style="fill:#eb7f2c;stroke:none;shape-rendering:geometricPrecision;" width="13.27" height="11.26" x="40.04" y="59.44" ry="3.14" transform="matrix(0.90187511,-0.43199686,0,1,0,0)" /> <rect style="fill:#2c49eb;stroke:none;shape-rendering:geometricPrecision;" width="13.27" height="11.26" x="54.83" y="59.57" ry="3.14" transform="matrix(0.90187511,-0.43199686,0,1,0,0)" /> <rect style="fill:#2c49eb;stroke:none;shape-rendering:geometricPrecision;" width="13.27" height="11.26" x="40.35" y="71.62" ry="3.14" transform="matrix(0.90187511,-0.43199686,0,1,0,0)" /> <rect style="fill:#2c49eb;stroke:none;shape-rendering:geometricPrecision;" width="13.27" height="11.26" x="54.68" y="71.75" ry="3.14" transform="matrix(0.90187511,-0.43199686,0,1,0,0)" /> <rect style="fill:#2c49eb;stroke:none;shape-rendering:geometricPrecision;" width="13.35" height="11.20" x="13.48" y="19.67" ry="3.12" transform="matrix(0.84723158,0.53122372,0,1,0,0)" /> <rect style="fill:#eb7f2c;stroke:none;shape-rendering:geometricPrecision;" width="13.35" height="11.20" x="28.36" y="19.80" ry="3.12" transform="matrix(0.84723158,0.53122372,0,1,0,0)" /> <rect style="fill:#2c49eb;stroke:none;shape-rendering:geometricPrecision;" width="13.35" height="11.20" x="13.79" y="31.78" ry="3.12" transform="matrix(0.84723158,0.53122372,0,1,0,0)" /> <rect style="fill:#2c49eb;stroke:none;shape-rendering:geometricPrecision;" width="13.35" height="11.20" x="28.21" y="31.92" ry="3.12" transform="matrix(0.84723158,0.53122372,0,1,0,0)" /> <rect style="fill:#2c49eb;stroke:none;shape-rendering:geometricPrecision;" width="13.49" height="14.24" x="34.59" y="-9.62" ry="3.97" transform="matrix(0.85815392,0.51339249,-0.91732703,0.39813455,0,0)" /> <rect style="fill:#2c49eb;stroke:none;shape-rendering:geometricPrecision;" width="13.49" height="14.24" x="49.63" y="-9.46" ry="3.97" transform="matrix(0.85815392,0.51339249,-0.91732703,0.39813455,0,0)" /> <rect style="fill:#2c49eb;stroke:none;shape-rendering:geometricPrecision;" width="13.49" height="14.24" x="34.90" y="5.77"  ry="3.97" transform="matrix(0.85815392,0.51339249,-0.91732703,0.39813455,0,0)" /> <rect style="fill:#eb7f2c;stroke:none;shape-rendering:geometricPrecision;" width="13.49" height="14.24" x="49.47" y="5.93"  ry="3.97" transform="matrix(0.85815392,0.51339249,-0.91732703,0.39813455,0,0)" /> <title>Generated using DbSchema - www.dbschema.com</title> </a></g>
+</g>
+
+<g transform='translate(0,110)'>
+<!-- ============= Fk 'admins_Ref' ============= -->
+<path id='admins_Ref'  onmouseover="hghl(['admins_Ref','manager_online_products.admins.createdByAdmin','manager_online_products.admins._id'])" onmouseout="uhghl(['admins_Ref','manager_online_products.admins.createdByAdmin','manager_online_products.admins._id'])" transform='translate(8,0)' class='scene' d='M 208 320 L 216,320 Q 224,320 224,312 L 224,224' >
+	<title>Fk Ref
+admins ref admins ( createdByAdmin -&gt; _id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0p)'   class='dotted virtual'  d='M 208 320 L 216,320 Q 224,320 224,312 L 224,224' ></path>
+<text x='217' y='315' transform='rotate(0 217,315)' title='Fk Ref
+admins ref admins ( createdByAdmin -&gt; _id )' class='relName' style='fill:#5f7f9f'>createdByAdmin</text>
+<!-- ============= Fk 'products_Ref' ============= -->
+<path id='products_Ref'  onmouseover="hghl(['products_Ref','manager_online_products.products.createdByAdmin','manager_online_products.admins._id'])" onmouseout="uhghl(['products_Ref','manager_online_products.products.createdByAdmin','manager_online_products.admins._id'])" transform='translate(8,0)' class='scene' d='M 272 240 L 232,240 Q 224,240 224,232 L 224,88 Q 224,80 216,80 L 208,80' >
+	<title>Fk Ref
+products ref admins ( createdByAdmin -&gt; _id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'  class='virtual'  d='M 272 240 L 232,240 Q 224,240 224,232 L 224,88 Q 224,80 216,80 L 208,80' ></path>
+<text x='191' y='235' transform='rotate(0 191,235)' title='Fk Ref
+products ref admins ( createdByAdmin -&gt; _id )' class='relName' style='fill:#5f7f9f'>createdByAdmin</text>
+<!-- ============= Table 'admins' ============= -->
+<rect class='entity' x='48' y='40' width='160' height='304' rx='8' ry='8' style='stroke:none'/>
+<path d='M 48.00 68.00 L 48.00 48.00 Q 48.00 40.00 56.00 40.00 L 200.00 40.00 Q 208.00 40.00 208.00 48.00 L 208.00 68.00 L48.00 68.00 ' style='fill:url(#tbg_1f5182);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='48' y='40' width='160' height='304' rx='8' ry='8' style='fill:none;stroke:#5f676e'/>
+<line class='delim' x1='48.000000' y1='68.000000' x2='208.000000' y2='68.000000' style='stroke:#5f676e'/>
+<line class='delim' x1='64.000000' y1='68.000000' x2='64.000000' y2='344.000000' style='stroke:#5f676e'/>
+<line class='delim' x1='196.000000' y1='68.000000' x2='196.000000' y2='344.000000' style='stroke:#5f676e'/>
+<a xlink:href='#admins'><text x='105' y='60'>admins</text><title>Collection manager_online_products.admins</title></a>
+  <use id='nn' x='50' y='77' xlink:href='#nn'/><a xlink:href='#admins._id'><use id='pk' x='50' y='76' xlink:href='#pk'/><title>Pk _id_ ( _id ) </title></a>
+<a xlink:href='#admins._id'><text id='manager_online_products.admins._id' x='67' y='87' onmouseover="hghl(['admins_Ref','manager_online_products.admins.createdByAdmin','products_Ref','manager_online_products.products.createdByAdmin'])" onmouseout="uhghl(['admins_Ref','manager_online_products.admins.createdByAdmin','products_Ref','manager_online_products.products.createdByAdmin'])">_id</text><text x='192' y='88' text-anchor='end' class='colType'>oid</text><title>_id
+* oid</title></a>
+<a xlink:href='#admins._id'><use id='ref' x='196' y='76' xlink:href='#ref'/><title>Referred by admins ( createdByAdmin -&gt; _id ) 
+Referred by products ( createdByAdmin -&gt; _id ) </title></a>
+  <use id='nn' x='50' y='93' xlink:href='#nn'/><a xlink:href='#admins.updatedAt'><text id='manager_online_products.admins.updatedAt' x='67' y='103'>updatedAt</text><text x='192' y='104' text-anchor='end' class='colType'>date</text><title>updatedAt
+* date</title></a>
+<text x='205' y='100' text-anchor='end' class='colType'>d</text>  <use id='nn' x='50' y='109' xlink:href='#nn'/><a xlink:href='#admins.createdAt'><text id='manager_online_products.admins.createdAt' x='67' y='119'>createdAt</text><text x='192' y='120' text-anchor='end' class='colType'>date</text><title>createdAt
+* date</title></a>
+<text x='205' y='116' text-anchor='end' class='colType'>d</text>  <use id='nn' x='50' y='125' xlink:href='#nn'/><a xlink:href='#admins.email'><use id='unq' x='50' y='124' xlink:href='#unq'/><title>Unq email_1 ( email ) </title></a>
+<a xlink:href='#admins.email'><text id='manager_online_products.admins.email' x='67' y='135'>email</text><text x='192' y='136' text-anchor='end' class='colType'>string</text><title>email
+* string</title></a>
+<text x='205' y='132' text-anchor='end' class='colType'>t</text>  <use id='nn' x='50' y='141' xlink:href='#nn'/><a xlink:href='#admins.password'><text id='manager_online_products.admins.password' x='67' y='151'>password</text><text x='192' y='152' text-anchor='end' class='colType'>string</text><title>password
+* string</title></a>
+<text x='205' y='148' text-anchor='end' class='colType'>t</text>  <use id='nn' x='50' y='157' xlink:href='#nn'/><a xlink:href='#admins.phoneNumber'><use id='unq' x='50' y='156' xlink:href='#unq'/><title>Unq phoneNumber_1 ( phoneNumber ) </title></a>
+<a xlink:href='#admins.phoneNumber'><text id='manager_online_products.admins.phoneNumber' x='67' y='167'>phoneNumber</text><text x='192' y='168' text-anchor='end' class='colType'>string</text><title>phoneNumber
+* string</title></a>
+<text x='205' y='164' text-anchor='end' class='colType'>t</text>  <use id='nn' x='50' y='173' xlink:href='#nn'/><a xlink:href='#admins.firstName'><text id='manager_online_products.admins.firstName' x='67' y='183'>firstName</text><text x='192' y='184' text-anchor='end' class='colType'>string</text><title>firstName
+* string</title></a>
+<text x='205' y='180' text-anchor='end' class='colType'>t</text>  <use id='nn' x='50' y='189' xlink:href='#nn'/><a xlink:href='#admins.lastName'><text id='manager_online_products.admins.lastName' x='67' y='199'>lastName</text><text x='192' y='200' text-anchor='end' class='colType'>string</text><title>lastName
+* string</title></a>
+<text x='205' y='196' text-anchor='end' class='colType'>t</text>  <use id='nn' x='50' y='205' xlink:href='#nn'/><a xlink:href='#admins.userRole'><text id='manager_online_products.admins.userRole' x='67' y='215'>userRole</text><text x='192' y='216' text-anchor='end' class='colType'>string</text><title>userRole
+* string</title></a>
+<text x='205' y='212' text-anchor='end' class='colType'>t</text>  <use id='nn' x='50' y='221' xlink:href='#nn'/><a xlink:href='#admins.isBlocked'><text id='manager_online_products.admins.isBlocked' x='67' y='231'>isBlocked</text><text x='192' y='232' text-anchor='end' class='colType'>boolean</text><title>isBlocked
+* boolean</title></a>
+<text x='205' y='228' text-anchor='end' class='colType'>b</text>  <use id='nn' x='50' y='237' xlink:href='#nn'/><a xlink:href='#admins.loginCount'><text id='manager_online_products.admins.loginCount' x='67' y='247'>loginCount</text><text x='192' y='248' text-anchor='end' class='colType'>integer</text><title>loginCount
+* integer</title></a>
+<text x='205' y='244' text-anchor='end' class='colType'>#</text>  <use id='nn' x='50' y='253' xlink:href='#nn'/><a xlink:href='#admins.isDeleted'><text id='manager_online_products.admins.isDeleted' x='67' y='263'>isDeleted</text><text x='192' y='264' text-anchor='end' class='colType'>boolean</text><title>isDeleted
+* boolean</title></a>
+<text x='205' y='260' text-anchor='end' class='colType'>b</text>  <use id='nn' x='50' y='269' xlink:href='#nn'/><a xlink:href='#admins.__v'><text id='manager_online_products.admins.__v' x='67' y='279'>__v</text><text x='192' y='280' text-anchor='end' class='colType'>integer</text><title>__v
+* integer</title></a>
+<text x='205' y='276' text-anchor='end' class='colType'>#</text>  <a xlink:href='#admins.lastLogin'><text id='manager_online_products.admins.lastLogin' x='67' y='295'>lastLogin</text><text x='192' y='296' text-anchor='end' class='colType'>date</text><title>lastLogin
+date</title></a>
+<text x='205' y='292' text-anchor='end' class='colType'>d</text>  <a xlink:href='#admins.accessToken'><use id='unq' x='50' y='300' xlink:href='#unq'/><title>Unq accessToken_1 ( accessToken ) </title></a>
+<a xlink:href='#admins.accessToken'><text id='manager_online_products.admins.accessToken' x='67' y='311'>accessToken</text><text x='192' y='312' text-anchor='end' class='colType'>string</text><title>accessToken
+string</title></a>
+<text x='205' y='308' text-anchor='end' class='colType'>t</text>  <a xlink:href='#admins.createdByAdmin'><text id='manager_online_products.admins.createdByAdmin' x='67' y='327' onmouseover="hghl(['admins_Ref','manager_online_products.admins._id'])" onmouseout="uhghl(['admins_Ref','manager_online_products.admins._id'])">createdByAdmin</text><text x='192' y='328' text-anchor='end' class='colType'>oid</text><title>createdByAdmin
+oid</title></a>
+<a xlink:href='#admins.createdByAdmin'><use id='fk' x='196' y='316' xlink:href='#fk'/><title>References admins ( createdByAdmin -&gt; _id ) </title></a>
+
+<!-- ============= Table 'products' ============= -->
+<rect class='entity' x='288' y='40' width='176' height='336' rx='8' ry='8' style='stroke:none'/>
+<path d='M 288.00 68.00 L 288.00 48.00 Q 288.00 40.00 296.00 40.00 L 456.00 40.00 Q 464.00 40.00 464.00 48.00 L 464.00 68.00 L288.00 68.00 ' style='fill:url(#tbg_1f5182);stroke:1;stroke-opacity:0.1;' />
+<rect class='entity' x='288' y='40' width='176' height='336' rx='8' ry='8' style='fill:none;stroke:#5f676e'/>
+<line class='delim' x1='288.000000' y1='68.000000' x2='464.000000' y2='68.000000' style='stroke:#5f676e'/>
+<line class='delim' x1='304.000000' y1='68.000000' x2='304.000000' y2='376.000000' style='stroke:#5f676e'/>
+<line class='delim' x1='452.000000' y1='68.000000' x2='452.000000' y2='376.000000' style='stroke:#5f676e'/>
+<a xlink:href='#products'><text x='348' y='60'>products</text><title>Collection manager_online_products.products</title></a>
+  <use id='nn' x='290' y='77' xlink:href='#nn'/><a xlink:href='#products._id'><use id='pk' x='290' y='76' xlink:href='#pk'/><title>Pk _id_ ( _id ) </title></a>
+<a xlink:href='#products._id'><text id='manager_online_products.products._id' x='307' y='87'>_id</text><text x='448' y='88' text-anchor='end' class='colType'>oid</text><title>_id
+* oid</title></a>
+  <use id='nn' x='290' y='93' xlink:href='#nn'/><a xlink:href='#products.updatedAt'><text id='manager_online_products.products.updatedAt' x='307' y='103'>updatedAt</text><text x='448' y='104' text-anchor='end' class='colType'>date</text><title>updatedAt
+* date</title></a>
+<text x='461' y='100' text-anchor='end' class='colType'>d</text>  <use id='nn' x='290' y='109' xlink:href='#nn'/><a xlink:href='#products.createdAt'><text id='manager_online_products.products.createdAt' x='307' y='119'>createdAt</text><text x='448' y='120' text-anchor='end' class='colType'>date</text><title>createdAt
+* date</title></a>
+<text x='461' y='116' text-anchor='end' class='colType'>d</text>  <use id='nn' x='290' y='125' xlink:href='#nn'/><a xlink:href='#products.productName'><text id='manager_online_products.products.productName' x='307' y='135'>productName</text><text x='448' y='136' text-anchor='end' class='colType'>string</text><title>productName
+* string</title></a>
+<text x='461' y='132' text-anchor='end' class='colType'>t</text>  <use id='nn' x='290' y='141' xlink:href='#nn'/><a xlink:href='#products.description'><text id='manager_online_products.products.description' x='307' y='151'>description</text><text x='448' y='152' text-anchor='end' class='colType'>string</text><title>description
+* string</title></a>
+<text x='461' y='148' text-anchor='end' class='colType'>t</text>  <use id='nn' x='290' y='157' xlink:href='#nn'/><a xlink:href='#products.totalStock'><text id='manager_online_products.products.totalStock' x='307' y='167'>totalStock</text><text x='448' y='168' text-anchor='end' class='colType'>integer</text><title>totalStock
+* integer</title></a>
+<text x='461' y='164' text-anchor='end' class='colType'>#</text>  <use id='nn' x='290' y='173' xlink:href='#nn'/><a xlink:href='#products.price'><text id='manager_online_products.products.price' x='307' y='183'>price</text><text x='448' y='184' text-anchor='end' class='colType'>integer</text><title>price
+* integer</title></a>
+<text x='461' y='180' text-anchor='end' class='colType'>#</text>  <use id='nn' x='290' y='189' xlink:href='#nn'/><a xlink:href='#products.discount'><text id='manager_online_products.products.discount' x='307' y='199'>discount</text><text x='448' y='200' text-anchor='end' class='colType'>integer</text><title>discount
+* integer</title></a>
+<text x='461' y='196' text-anchor='end' class='colType'>#</text>  <use id='nn' x='290' y='205' xlink:href='#nn'/><a xlink:href='#products.salePrice'><text id='manager_online_products.products.salePrice' x='307' y='215'>salePrice</text><text x='448' y='216' text-anchor='end' class='colType'>integer</text><title>salePrice
+* integer</title></a>
+<text x='461' y='212' text-anchor='end' class='colType'>#</text>  <use id='nn' x='290' y='221' xlink:href='#nn'/><a xlink:href='#products.brand'><text id='manager_online_products.products.brand' x='307' y='231'>brand</text><text x='448' y='232' text-anchor='end' class='colType'>string</text><title>brand
+* string</title></a>
+<text x='461' y='228' text-anchor='end' class='colType'>t</text>  <use id='nn' x='290' y='237' xlink:href='#nn'/><a xlink:href='#products.createdByAdmin'><text id='manager_online_products.products.createdByAdmin' x='307' y='247' onmouseover="hghl(['products_Ref','manager_online_products.admins._id'])" onmouseout="uhghl(['products_Ref','manager_online_products.admins._id'])">createdByAdmin</text><text x='448' y='248' text-anchor='end' class='colType'>oid</text><title>createdByAdmin
+* oid</title></a>
+<a xlink:href='#products.createdByAdmin'><use id='fk' x='452' y='236' xlink:href='#fk'/><title>References admins ( createdByAdmin -&gt; _id ) </title></a>
+  <use id='nn' x='290' y='253' xlink:href='#nn'/><a xlink:href='#products.isDeleted'><text id='manager_online_products.products.isDeleted' x='307' y='263'>isDeleted</text><text x='448' y='264' text-anchor='end' class='colType'>boolean</text><title>isDeleted
+* boolean</title></a>
+<text x='461' y='260' text-anchor='end' class='colType'>b</text>  <use id='nn' x='290' y='269' xlink:href='#nn'/><a xlink:href='#products.isAvailable'><text id='manager_online_products.products.isAvailable' x='307' y='279'>isAvailable</text><text x='448' y='280' text-anchor='end' class='colType'>boolean</text><title>isAvailable
+* boolean</title></a>
+<text x='461' y='276' text-anchor='end' class='colType'>b</text>  <use id='nn' x='290' y='285' xlink:href='#nn'/><a xlink:href='#products.totalUsersRated'><text id='manager_online_products.products.totalUsersRated' x='307' y='295'>totalUsersRated</text><text x='448' y='296' text-anchor='end' class='colType'>integer</text><title>totalUsersRated
+* integer</title></a>
+<text x='461' y='292' text-anchor='end' class='colType'>#</text>  <use id='nn' x='290' y='301' xlink:href='#nn'/><a xlink:href='#products.totalRating'><text id='manager_online_products.products.totalRating' x='307' y='311'>totalRating</text><text x='448' y='312' text-anchor='end' class='colType'>integer</text><title>totalRating
+* integer</title></a>
+<text x='461' y='308' text-anchor='end' class='colType'>#</text>  <use id='nn' x='290' y='317' xlink:href='#nn'/><a xlink:href='#products.totalSold'><text id='manager_online_products.products.totalSold' x='307' y='327'>totalSold</text><text x='448' y='328' text-anchor='end' class='colType'>integer</text><title>totalSold
+* integer</title></a>
+<text x='461' y='324' text-anchor='end' class='colType'>#</text>  <use id='nn' x='290' y='333' xlink:href='#nn'/><a xlink:href='#products.__v'><text id='manager_online_products.products.__v' x='307' y='343'>__v</text><text x='448' y='344' text-anchor='end' class='colType'>integer</text><title>__v
+* integer</title></a>
+<text x='461' y='340' text-anchor='end' class='colType'>#</text>  <a xlink:href='#products.deletedAt'><text id='manager_online_products.products.deletedAt' x='307' y='359'>deletedAt</text><text x='448' y='360' text-anchor='end' class='colType'>date</text><title>deletedAt
+date</title></a>
+<text x='461' y='356' text-anchor='end' class='colType'>d</text>
+</g></svg></div>
+
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='admins' onclick='window.scrollTo(60, 48);return false;' style='cursor:pointer;'><h4 class='card-title'>Collection admins</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg><svg width='14' height='14'><use xlink:href='#ref'/></svg></td>
+		<td><a name='admins._id'>&#95;id</a></td>
+		<td> oid  AUTOINCREMENT  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='admins.updatedAt'>updatedAt</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='admins.createdAt'>createdAt</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#unq'/></svg></td>
+		<td><a name='admins.email'>email</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='admins.password'>password</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#unq'/></svg></td>
+		<td><a name='admins.phoneNumber'>phoneNumber</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='admins.firstName'>firstName</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='admins.lastName'>lastName</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='admins.userRole'>userRole</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='admins.isBlocked'>isBlocked</a></td>
+		<td> boolean   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='admins.loginCount'>loginCount</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='admins.isDeleted'>isDeleted</a></td>
+		<td> boolean   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='admins.__v'>&#95;&#95;v</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='admins.lastLogin'>lastLogin</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#unq'/></svg></td>
+		<td><a name='admins.accessToken'>accessToken</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='admins.createdByAdmin'>createdByAdmin</a></td>
+		<td> oid   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>&#95;id&#95;</td>
+		<td> ON &#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#unq'/></svg></td><td>email&#95;1</td>
+		<td> ON email</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#unq'/></svg></td><td>phoneNumber&#95;1</td>
+		<td> ON phoneNumber</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#unq'/></svg></td><td>accessToken&#95;1</td>
+		<td> ON accessToken</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Virtual Relations</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>Ref</td>
+		<td > ( createdByAdmin ) ref <a href='#admins'>admins</a> (&#95;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<br/><br/>
+<div class='card'><div class='card-block'><a name='products' onclick='window.scrollTo(88, 48);return false;' style='cursor:pointer;'><h4 class='card-title'>Collection products</h4></a>
+<table class='table-sm table-bordered'>
+<thead>
+<tr><th>Indexes</th><th>Field Name</th><th>Data Type</th><th>Description</th></tr></thead>
+<tbody>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#pk'/></svg></td>
+		<td><a name='products._id'>&#95;id</a></td>
+		<td> oid  AUTOINCREMENT  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.updatedAt'>updatedAt</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.createdAt'>createdAt</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.productName'>productName</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.description'>description</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.totalStock'>totalStock</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.price'>price</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.discount'>discount</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.salePrice'>salePrice</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.brand'>brand</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*<svg width='14' height='14'><use xlink:href='#fk'/></svg></td>
+		<td><a name='products.createdByAdmin'>createdByAdmin</a></td>
+		<td> oid   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.isDeleted'>isDeleted</a></td>
+		<td> boolean   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.isAvailable'>isAvailable</a></td>
+		<td> boolean   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.totalUsersRated'>totalUsersRated</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.totalRating'>totalRating</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.totalSold'>totalSold</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='products.__v'>&#95;&#95;v</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='products.deletedAt'>deletedAt</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Indexes</th></tr>
+	<tr>		<td><svg width='14' height='14'><use xlink:href='#pk'/></svg></td><td>&#95;id&#95;</td>
+		<td> ON &#95;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'>Virtual Relations</th></tr>
+	<tr>
+		<td><svg width='14' height='14'><use xlink:href='#fk'/></svg></td><td>Ref</td>
+		<td > ( createdByAdmin ) ref <a href='#admins'>admins</a> (&#95;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table></div></div>
+
+<p align='right'><a href='http://www.dbschema.com' style='color:#aaa'>Powered by DbSchema</a></p></body></html>

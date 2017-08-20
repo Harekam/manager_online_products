@@ -7,12 +7,14 @@ const util = require('../Utilities/util');
 const Joi = require('joi');
 const tags = ['api', 'user'];
 const adminResponses = require('./adminResponses');
+const notes = 'auth token should be in pattern(without quotes): "bearer access_token"';
 
 const registerAdmin = {
     method: 'POST',
     path: '/api/v1/admin',
     config: {
         auth: 'adminAuth',
+        notes,
         description: 'register new admin',
         tags,
         handler: (request, reply) => {
