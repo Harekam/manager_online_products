@@ -37,4 +37,8 @@ Manager Online Products
 #### Command for running the server
 
     npm start
-    
+
+
+#### Use-Case Diagram of System
+
+![](Images/system_use_case.png?raw=true)
