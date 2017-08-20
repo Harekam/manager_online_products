@@ -8,7 +8,7 @@ const constants = config.CONSTANTS;
 const util = require('../Utilities/util');
 const Joi = require('joi');
 const DefaultResponse = config.RESPONSE_MESSAGES.DefaultResponse;
-const REGEX = constants.REGEX;
+const {REGEX, CONTENT_BOUNDS} = constants;
 const tags = ['api', 'admin', 'product'];
 const productResponses = require('./productResponses');
 const notes = 'auth token should be in pattern(without quotes): "bearer access_token"';
@@ -39,14 +39,14 @@ const addProduct = {
         validate: {
             headers: util.authorizeHeaderObject,
             payload: {
-                productName: Joi.string().required().trim(),
-                description: Joi.string().optional().trim(),
+                productName: Joi.string().required().trim().min(CONTENT_BOUNDS.name.min).max(CONTENT_BOUNDS.name.max),
+                description: Joi.string().optional().trim().min(CONTENT_BOUNDS.description.min).max(CONTENT_BOUNDS.description.max),
                 totalStock: Joi.number().required().integer(),
                 totalSold: Joi.number().optional().integer(),
                 price: Joi.number().required().positive(),
                 discount: Joi.number().optional().min(0),
                 salePrice: Joi.number().optional().positive(),
-                brand: Joi.string().required().trim(),
+                brand: Joi.string().required().trim().min(CONTENT_BOUNDS.name.min).max(CONTENT_BOUNDS.name.max),
                 isAvailable: Joi.boolean().default(true)
             },
             failAction: util.failActionFunction
@@ -88,14 +88,14 @@ const updateProduct = {
                 productId: Joi.string().required().trim().regex(REGEX.OBJECT_ID)
             },
             payload: {
-                productName: Joi.string().optional().trim(),
-                description: Joi.string().optional().trim(),
+                productName: Joi.string().optional().trim().min(CONTENT_BOUNDS.name.min).max(CONTENT_BOUNDS.name.max),
+                description: Joi.string().optional().trim().min(CONTENT_BOUNDS.description.min).max(CONTENT_BOUNDS.description.max),
                 totalStock: Joi.number().optional().integer(),
                 totalSold: Joi.number().optional().integer(),
                 price: Joi.number().optional().positive(),
                 discount: Joi.number().optional().min(0),
                 salePrice: Joi.number().optional().positive(),
-                brand: Joi.string().optional().trim(),
+                brand: Joi.string().optional().trim().min(CONTENT_BOUNDS.name.min).max(CONTENT_BOUNDS.name.max),
                 isAvailable: Joi.boolean().optional()
             },
             failAction: util.failActionFunction
@@ -173,7 +173,7 @@ const getProduct = {
             headers: util.authorizeHeaderObject,
             query: {
                 productId: Joi.string().optional().trim().regex(REGEX.OBJECT_ID),
-                searchText: Joi.string().optional().trim().lowercase().description("search by product name"),
+                searchText: Joi.string().optional().trim().lowercase().description("search by product name").min(CONTENT_BOUNDS.searchText.min).max(CONTENT_BOUNDS.searchText.max),
                 orderBy: Joi.string().optional().valid(
                     constants.SORT_ORDER.ASC,
                     constants.SORT_ORDER.DESC

@@ -2,7 +2,7 @@
 const adminController = require('../Controllers').adminController;
 const config = require('../Config');
 const constants = config.CONSTANTS;
-const REGEX = constants.REGEX;
+const {REGEX, CONTENT_BOUNDS} = constants;
 const util = require('../Utilities/util');
 const Joi = require('joi');
 const tags = ['api', 'user'];
@@ -33,10 +33,10 @@ const registerAdmin = {
         validate: {
             headers: util.authorizeHeaderObject,
             payload: {
-                firstName: Joi.string().required().trim().regex(REGEX.ALPHABET_ONLY),
-                lastName: Joi.string().required().trim().regex(REGEX.ALPHABET_ONLY),
-                email: Joi.string().required().trim().email(),
-                phoneNumber: Joi.string().required().trim().regex(REGEX.PHONE_NUMBER).length(constants.PHONE_NUM_LEN),
+                firstName: Joi.string().required().trim().regex(REGEX.ALPHABET_ONLY).min(CONTENT_BOUNDS.name.min).max(CONTENT_BOUNDS.name.max),
+                lastName: Joi.string().required().trim().regex(REGEX.ALPHABET_ONLY).min(CONTENT_BOUNDS.name.min).max(CONTENT_BOUNDS.name.max),
+                email: Joi.string().required().trim().email().min(CONTENT_BOUNDS.email.min).max(CONTENT_BOUNDS.email.max),
+                phoneNumber: Joi.string().required().trim().regex(REGEX.PHONE_NUMBER).length(CONTENT_BOUNDS.phone.max),
                 userRole: Joi.string().required().valid(
                     constants.USER_ROLE.ADMIN,
                     constants.USER_ROLE.SUPER_ADMIN
@@ -76,8 +76,8 @@ const loginAdmin = {
         },
         validate: {
             payload: {
-                loginId: Joi.string().required().trim().description("email or phone number"),
-                password: Joi.string().required().trim().min(constants.PASSWORD_MIN_LEN).max(constants.PASSWORD_MAX_LEN)
+                loginId: Joi.string().required().trim().description("email or phone number").min(CONTENT_BOUNDS.email.min).max(CONTENT_BOUNDS.email.max),
+                password: Joi.string().required().trim().min(CONTENT_BOUNDS.password.min).max(CONTENT_BOUNDS.password.max)
             },
             failAction: util.failActionFunction
         },

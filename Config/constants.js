@@ -73,7 +73,7 @@ const MONTHS = {
     December: "December"
 };
 const PASSWORD_MIN_LEN = 6;
-const PASSWORD_MAX_LEN = 500;
+const PASSWORD_MAX_LEN = 100;
 const PHONE_NUM_LEN = 10;
 const PROFILE_PICTURE_SUFFIX_URL = process.env.PROFILE_PICTURE_SUFFIX_URL || 'http://palmleaftest.mahindracomviva.com:8088/main/upload/users/';
 const PALM_LEAF_SERVER_URL = {
@@ -84,8 +84,34 @@ const USER_ROLE = {
     ADMIN: 'ADMIN',
     SUPER_ADMIN: 'SUPER_ADMIN'
 };
-
+const CONTENT_BOUNDS = {
+    password: {
+        min: 6,
+        max: 100
+    },
+    phone: {
+        min: 10,
+        max: 10
+    },
+    name: {
+        min: 2,
+        max: 140
+    },
+    description: {
+        min: 10,
+        max: 10000
+    },
+    email: {
+        min: 4,
+        max: 254
+    },
+    searchText: {
+        min: 1,
+        max: 50
+    }
+};
 module.exports = {
+    CONTENT_BOUNDS,
     PASSWORD_MAX_LEN,
     PHONE_NUM_LEN,
     PASSWORD_MIN_LEN,
