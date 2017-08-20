@@ -8,6 +8,7 @@ const Hapi = require('hapi'),
     mongoose = require('mongoose'),
     bootstrap = require('./Utilities/bootstrap'),
     async = require('async'),
+    Path = require('path'),
     Routes = require('./Routes');
 //mongoose.set('debug', true);
 
@@ -16,7 +17,10 @@ const MONGO_DB_URI = config.dbConfig.mongodbURI;
 let connectionOptions = {
     port: config.serverConfig.PORT,
     routes: {
-        cors: true
+        cors: true,
+        files: {
+            relativeTo: Path.join(__dirname, 'Public')
+        }
     }
 };
 
@@ -44,8 +48,15 @@ function _init() {
         method: 'GET',
         path: '/',
         handler: function (request, reply) {
-
             return reply('Welcome to Manager online products!');
+        }
+    });
+    // Add the route
+    server.route({
+        method: 'GET',
+        path: '/dbSchema',
+        handler: function (request, reply) {
+            reply.file('db_schema.html');
         }
     });
 }
