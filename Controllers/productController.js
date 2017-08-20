@@ -17,6 +17,7 @@ const STATUS_CODE = constants.STATUS_CODE;
 
 function addProduct(userDetails, payload, callbackRoute) {
     payload.createdByAdmin = userDetails.userData._id;
+    payload.sanitizedProductName = payload.productName.toLowerCase();
     async.auto({
         add: (callback) => {
             Services.productService.addProduct(payload, callback);
@@ -30,6 +31,7 @@ function addProduct(userDetails, payload, callbackRoute) {
 }
 
 function updateProduct(userDetails, payload, callbackRoute) {
+    if (payload.productName) payload.sanitizedProductName = payload.productName.toLowerCase();
     async.auto({
         update: (callback) => {
             Services.productService.updateProduct(payload, (err, res) => {

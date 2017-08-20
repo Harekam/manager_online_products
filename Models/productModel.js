@@ -10,6 +10,12 @@ const product = new Schema({
         type: String,
         required: true
     },
+    sanitizedProductName: {
+        type: String,
+        required: true,
+        index: true,
+        select: false
+    },
     description: {
         type: String,
         required: false

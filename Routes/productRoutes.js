@@ -173,6 +173,7 @@ const getProduct = {
             headers: util.authorizeHeaderObject,
             query: {
                 productId: Joi.string().optional().trim().regex(REGEX.OBJECT_ID),
+                searchText: Joi.string().optional().trim().lowercase().description("search by product name"),
                 orderBy: Joi.string().optional().valid(
                     constants.SORT_ORDER.ASC,
                     constants.SORT_ORDER.DESC

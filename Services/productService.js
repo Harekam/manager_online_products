@@ -52,6 +52,10 @@ function getProduct(data, callback) {
     }
     if (!data.includeDeleted)
         query.isDeleted = false;
+
+    if (data.searchText)
+        query.sanitizedProductName = new RegExp(data.searchText);
+
     DaoManager.getData(MODEL, query, {
         __v: 0,
         createdByAdmin: 0
@@ -65,8 +69,12 @@ function getProductCount(data, callback) {
 
     if (!data.includeDeleted)
         query.isDeleted = false;
+    if (data.searchText)
+        query.sanitizedProductName = new RegExp(data.searchText);
+
     DaoManager.getCount(MODEL, query, callback);
 }
+
 module.exports = {
     addProduct,
     updateProduct,
