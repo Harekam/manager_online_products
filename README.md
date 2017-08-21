@@ -42,11 +42,6 @@ Manager Online Products
 
     npm start
 
-
-#### Use-Case Diagram of System
-
-![](Images/system_use_case.png?raw=true)
-
 #### Following are character constraints on some fields in the APIs
  - password
    - min : 6
@@ -66,3 +61,11 @@ Manager Online Products
  - searchText
    - min : 1
    - max : 50
+
+#### Use-Case Diagram of System
+
+![](Images/system_use_case.png?raw=true)
+
+#### Flow Chart of System
+
+![](Images/system_flow_chart.png?raw=true)
