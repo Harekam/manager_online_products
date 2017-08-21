@@ -2,8 +2,6 @@
  * Created by harekam on 18/08/17.
  */
 'use strict';
-const log4js = require('log4js');
-const logger = log4js.getLogger('[DaoManager]');
 /*
  ----------------------------------------
  GET DATA
@@ -12,7 +10,7 @@ const logger = log4js.getLogger('[DaoManager]');
 function getData(model, query, projection, options, callback) {
     model.find(query, projection, options, (err, data) => {
         if (err) {
-            logger.error("Get Data", err);
+            console.error("Get Data", err);
             return callback(err);
         }
         return callback(null, data);
@@ -28,7 +26,7 @@ function aggregateData(model, group, callback) {
     model.aggregate(group, (err, data) => {
 
         if (err) {
-            logger.error("Aggregate Data", err);
+            console.error("Aggregate Data", err);
             return callback(err);
         }
         return callback(null, data);
@@ -43,7 +41,7 @@ function aggregateDataWithPopulate(model, group, populateOptions, callback) {
     model.aggregate(group, (err, data) => {
 
         if (err) {
-            logger.error("Aggregate Data", err);
+            console.error("Aggregate Data", err);
             return callback(err);
         }
 
@@ -68,7 +66,7 @@ function setData(model, data, callback) {
     new model(data).save((err, resultData) => {
 
         if (err) {
-            logger.error("SET DATA: ", err);
+            console.error("SET DATA: ", err);
             return callback(err);
         }
 
@@ -88,7 +86,7 @@ function insertMany(model, data, callback) {
     model.insertMany(data, (err, resultData) => {
 
         if (err) {
-            logger.error("INSERT MANY DATA: ", err);
+            console.error("INSERT MANY DATA: ", err);
             return callback(err);
         }
         return callback(null, resultData);
@@ -107,7 +105,7 @@ function deleteData(model, conditions, callback) {
     model.deleteMany(conditions, (err, removed) => {
 
         if (err) {
-            logger.error("Delete Data", err);
+            console.error("Delete Data", err);
             return callback(err);
         }
         return callback(null, removed.result);
@@ -125,7 +123,7 @@ function batchInsert(model, batchData, options, callback) {
     model.collection.insert(batchData, options, (error, docs) => {
 
         if (error) {
-            logger.error("Batch insert:", error);
+            console.error("Batch insert:", error);
             return callback(error);
         }
 
@@ -138,7 +136,7 @@ function batchInsert(model, batchData, options, callback) {
 function getCount(model, condition, callback) {
     model.count(condition, (error, count) => {
         if (error) {
-            logger.error("Error Get Count: ", error);
+            console.error("Error Get Count: ", error);
             return callback(error);
         }
         return callback(null, count);
@@ -154,7 +152,7 @@ function update(model, conditions, updateData, options, callback) {
     model.update(conditions, updateData, options, (err, result) => {
 
         if (err) {
-            logger.error("Update Query: ", err);
+            console.error("Update Query: ", err);
             return callback(err);
         }
         return callback(null, result);
@@ -209,7 +207,7 @@ function getDataDeepPopulateFourLevel(model, query, projectionQuery, options, po
 function getDistinctData(model, field, condition, callback) {
     model.distinct(field, condition, (error, result) => {
         if (error) {
-            logger.error("Distinct Data", error);
+            console.error("Distinct Data", error);
             return callback(error);
         }
         return callback(null, result);
@@ -219,7 +217,7 @@ function getDistinctData(model, field, condition, callback) {
 function findOneAndUpdateData(model, conditions, updateData, options, callback) {
     model.findOneAndUpdate(conditions, updateData, options, (error, result) => {
         if (error) {
-            logger.error("Find one and update", error);
+            console.error("Find one and update", error);
             return callback(error);
         }
         return callback(null, result);
@@ -235,7 +233,7 @@ function getDataWithReference(model, query, projection, options, collectionOptio
     model.find(query, projection, options).populate(collectionOptions).exec((err, data) => {
 
         if (err) {
-            logger.error("Error Data reference: ", err);
+            console.error("Error Data reference: ", err);
             return callback(err);
         }
         return callback(null, data);

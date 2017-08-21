@@ -26,7 +26,7 @@ const addProduct = {
             }, request.payload, (error, success) => {
                 if (error)
                     return reply(error);
-                return reply(success);
+                return reply(null, success);
             });
         },
         validate: {
@@ -60,7 +60,7 @@ const updateProduct = {
             }, Object.assign({}, request.payload, request.params), (error, success) => {
                 if (error)
                     return reply(error);
-                return reply(success);
+                return reply(null, success);
             });
         },
         validate: {
@@ -98,7 +98,7 @@ const deleteProduct = {
             }, request.params, (error, success) => {
                 if (error)
                     return reply(error);
-                return reply(success);
+                return reply(null, success);
             });
         },
         validate: {
@@ -124,7 +124,7 @@ const getProduct = {
             }, request.query, (error, success) => {
                 if (error)
                     return reply(error);
-                return reply(success);
+                return reply(null, success);
             });
         },
         validate: {

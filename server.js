@@ -4,30 +4,33 @@
 'use strict';
 const http = require("http");
 const config = require('./Config');
-const constants = config.CONSTANTS;
-var bodyParser = require('body-parser')
-var jsonParser = bodyParser.json();
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 const mongoose = require('mongoose');
-const {
-    REGEX,
-    CONTENT_BOUNDS
-} = constants;
 const httpUrl = require('url');
 const async = require('async');
-const formidable = require('formidable');
-const _ = require('lodash');
-const {
-    productController,
-    adminController
-} = require('./Controllers');
-const {
-    util
-} = require('./Utilities');
 const Joi = require('joi');
 const {
     API_PATH,
     PORT
 } = config.serverConfig;
+const MONGO_DB_URI = config.dbConfig.mongodbURI;
+const {authenticate} = require('./Plugins');
+const Routes = require('./Routes');
+const {bootstrap, util} = require('./Utilities');
+const routeMap = new Map();
+
+for (let i = 0, len = Routes.length; i < len; i++) {
+    if (!Routes[i].config || (Routes[i].config && (!Routes[i].config.validate || !Routes[i].config.handler)))
+        throw new Error("Invalid route options");
+    const key = `${Routes[i].path} | ${Routes[i].method}`;
+    if (routeMap.has(key)) {
+        throw new Error("Route path already exists");
+    } else {
+        routeMap.set(key, i);
+    }
+}
+const httpServer = http.createServer(onRequest).listen(PORT);
 
 function onRequest(request, response) {
     const {
@@ -40,7 +43,6 @@ function onRequest(request, response) {
         query
     } = httpUrl.parse(url, true);
     let params = {};
-    let payload = {};
     if (!headers["content-type"])
         headers["content-type"] = "application/json";
     if (headers["content-type"] !== "application/json") {
@@ -57,7 +59,7 @@ function onRequest(request, response) {
     for (let route in API_PATH) {
         if (API_PATH.hasOwnProperty(route)) {
             let routeMethod = API_PATH[route].method;
-            if ((routeMethod === "PUT" || routeMethod === "DELETE") && API_PATH[route].pattern) {
+            if (method === routeMethod && (routeMethod === "PUT" || routeMethod === "DELETE") && API_PATH[route].pattern) {
                 params = API_PATH[route].pattern().match(pathname);
                 if (params) {
                     pathname = API_PATH[route].path;
@@ -66,185 +68,101 @@ function onRequest(request, response) {
             }
         }
     }
-    const form = new formidable.IncomingForm();
-    switch (`${pathname} | ${method}`) {
-        case `${API_PATH.CREATE_PRODUCT.path} | ${API_PATH.CREATE_PRODUCT.method}`:
-            form.parse(request, function (err, fields) {
-                if (err) {
-                    response.writeHead(400, {
-                        'Content-Type': 'application/json'
-                    });
-                    response.end(JSON.stringify({
-                        message: API_PATH.CREATE_PRODUCT.path
-                    }));
-                    return;
-                }
-
-                response.writeHead(200, {
-                    'Content-Type': 'application/json'
-                });
-                response.end(JSON.stringify(fields));
-            });
-            break;
-        case `${API_PATH.UPDATE_PRODUCT.path} | ${API_PATH.UPDATE_PRODUCT.method}`:
-            const schema = {
-                params: {
-                    productId: Joi.string().required().trim().regex(REGEX.OBJECT_ID)
-                },
-                payload: {
-                    productName: Joi.string().optional().trim().min(CONTENT_BOUNDS.name.min).max(CONTENT_BOUNDS.name.max),
-                    description: Joi.string().optional().trim().min(CONTENT_BOUNDS.description.min).max(CONTENT_BOUNDS.description.max),
-                    totalStock: Joi.number().optional().integer(),
-                    totalSold: Joi.number().optional().integer(),
-                    price: Joi.number().optional().positive(),
-                    discount: Joi.number().optional().min(0),
-                    salePrice: Joi.number().optional().positive(),
-                    brand: Joi.string().optional().trim().min(CONTENT_BOUNDS.name.min).max(CONTENT_BOUNDS.name.max),
-                    isAvailable: Joi.boolean().optional()
-                }
-            };
-            async.auto({
-                validateHeaders: (callback) => {
-                    Joi.validate(headers, util.authorizeHeaderObject, (err, res) => {
-                        if (err) return callback(util.createErrorResponse("Access Denied", 401));
-                        const tokenDetails = res.authorization.split(" ");
-                        if (tokenDetails[0] !== "bearer")
-                            return callback(util.createErrorResponse("Access Denied", 401));
-                        const scope = new Set();
-                        scope.add(constants.USER_ROLE.ADMIN);
-                        scope.add(constants.USER_ROLE.SUPER_ADMIN);
-                        return util.authorizeUser({
-                            accessToken: tokenDetails[1],
-                            scope
-                        }, callback);
-                    });
-                },
-                parseForm: ['validateHeaders', (results, callback) => {
-                    jsonParser(request, response, (err, res) => {
-                        if (err) {
-                            return callback(err);
-                        }
-                        payload = request.body;
-                        return callback(null, request.body);
-                    })
-                    // form.parse(request, function (err, fields, files) {
-                    //     if (err) return callback(err);
-                    //     payload = fields;
-                    //     return callback(null);
-                    // });
-                }],
-                validateParams: ['validateHeaders', (results, callback) => {
-                    Joi.validate(params, schema.params, (err, res) => {
-                        if (err) {
-                            return callback(util.failActionFunction(err));
-                        }
-                        params = res;
-                        return callback(null);
-                    });
-                }],
-                validatePayload: ['parseForm', (results, callback) => {
-                    Joi.validate(payload, schema.payload, (err, res) => {
-                        if (err) {
-                            return callback(util.failActionFunction(err));
-                        }
-                        payload = res;
-                        return callback(null);
-                    });
-                }],
-                process: ['validatePayload', 'validateParams', (results, callback) => {
-                    productController.updateProduct({
-                        userData: results.validateHeaders
-                    }, Object.assign({}, payload, params), callback);
-                }]
-            }, (error, success) => {
-                if (error) {
-                    if (!_.isObject(error) ||
-                        (_.isObject(error) &&
-                            (!error.hasOwnProperty('statusCode') || !error.hasOwnProperty('response')))) {
-                        error = util.createErrorResponse(error);
-                    }
-                    response.writeHead(error.statusCode, {
-                        'Content-Type': 'application/json'
-                    });
-                    response.end(JSON.stringify(error.response));
-                    return;
-                }
-                success = success.process;
-                if (!_.isObject(success) ||
-                    (_.isObject(success) &&
-                        (!success.hasOwnProperty('statusCode') || !success.hasOwnProperty('response')))) {
-                    success = util.createSuccessResponse(success);
-                }
-                response.writeHead(success.statusCode, {
-                    'Content-Type': 'application/json'
-                });
-                response.end(JSON.stringify(success.response));
-                return;
-            });
-            break;
-        case `${API_PATH.DELETE_PRODUCT.path} | ${API_PATH.DELETE_PRODUCT.method}`:
-            form.parse(request, function (err, fields) {
-                if (err) {
-                    response.writeHead(400, {
-                        'Content-Type': 'application/json'
-                    });
-                    response.end(JSON.stringify({
-                        message: API_PATH.CREATE_PRODUCT.path
-                    }));
-                    return;
-                }
-
-                response.writeHead(200, {
-                    'Content-Type': 'application/json'
-                });
-                response.end(JSON.stringify(fields));
-            });
-            break;
-        case `${API_PATH.GET_PRODUCT.path} | ${API_PATH.GET_PRODUCT.method}`:
-            response.writeHead(200, {
-                'Content-Type': 'application/json'
-            });
-            response.end(JSON.stringify({
-                message: API_PATH.GET_PRODUCT.path
-            }));
-            break;
-        case `${API_PATH.CREATE_ADMIN.path} | ${API_PATH.CREATE_ADMIN.method}`:
-            response.writeHead(200, {
-                'Content-Type': 'application/json'
-            });
-            response.end(JSON.stringify({
-                message: API_PATH.CREATE_ADMIN.path
-            }));
-            break;
-        case `${API_PATH.LOGIN_ADMIN.path} | ${API_PATH.LOGIN_ADMIN.method}`:
-            response.writeHead(200, {
-                'Content-Type': 'application/json'
-            });
-            response.end(JSON.stringify({
-                message: API_PATH.LOGIN_ADMIN.path
-            }));
-            break;
-        default:
-            response.writeHead(404, {
-                'Content-Type': 'application/json'
-            });
-            response.end(JSON.stringify({
-                message: "404 error! not found"
-            }));
-            break;
+    const key = `${pathname} | ${method}`;
+    if (!routeMap.has(key)) {
+        response.writeHead(404, {
+            'Content-Type': 'application/json'
+        });
+        response.end(JSON.stringify({
+            message: "404 error! not found"
+        }));
+        return;
     }
-    console.log("Request received.");
+    const requestedRoute = Routes[routeMap.get(key)];
+    const failAction = requestedRoute.config.validate.failAction || util.failActionFunction;
+    request.params = params;
+    request.query = query;
+    async.auto({
+        auth: (callback) => {
+            if (!requestedRoute.config.auth)
+                return callback(null);
+            return authenticate.authMiddleware(request, requestedRoute, callback);
+        },
+        parseForm: ['auth', (results, callback) => {
+            if (!requestedRoute.config.validate || (requestedRoute.config.validate && !requestedRoute.config.validate.payload))
+                return callback(null);
+            jsonParser(request, response, (err) => {
+                if (err) {
+                    return callback(err);
+                }
+                request.payload = request.body;
+                return callback(null, request.payload);
+            })
+        }],
+        validateParams: ['auth', (results, callback) => {
+            if (!requestedRoute.config.validate || (requestedRoute.config.validate && !requestedRoute.config.validate.params))
+                return callback(null);
+            Joi.validate(request.params, requestedRoute.config.validate.params, (err, res) => {
+                if (err) {
+                    return callback(failAction(err));
+                }
+                request.params = res;
+                return callback(null);
+            });
+        }],
+        validateQuery: ['auth', (results, callback) => {
+            if (!requestedRoute.config.validate || (requestedRoute.config.validate && !requestedRoute.config.validate.query))
+                return callback(null);
+            Joi.validate(request.query, requestedRoute.config.validate.query, (err, res) => {
+                if (err) {
+                    return callback(failAction(err));
+                }
+                request.query = res;
+                return callback(null);
+            });
+        }],
+        validatePayload: ['parseForm', (results, callback) => {
+            if (!requestedRoute.config.validate || (requestedRoute.config.validate && !requestedRoute.config.validate.payload))
+                return callback(null);
+            Joi.validate(request.payload, requestedRoute.config.validate.payload, (err, res) => {
+                if (err) {
+                    return callback(failAction(err));
+                }
+                request.payload = res;
+                return callback(null);
+            });
+        }],
+        process: ['validatePayload', 'validateParams', 'validateQuery', (results, callback) => {
+            requestedRoute.config.handler(request, callback);
+        }]
+    }, (err, res) => {
+        let responseObject = res.process;
+        if (err) {
+            responseObject = util.createErrorResponse(err);
+        }
+        response.writeHead(responseObject.statusCode, {
+            'Content-Type': 'application/json'
+        });
+        response.end(JSON.stringify(responseObject.response));
+        return;
+    });
 }
+
 mongoose.Promise = global.Promise; //mongoose warning fix
-const MONGO_DB_URI = config.dbConfig.mongodbURI;
-mongoose.connect(MONGO_DB_URI, (err) => {
+async.auto({
+    db: (callback) => {
+        mongoose.connect(MONGO_DB_URI, callback);
+    },
+    bootstrap: ['db', (results, callback) => {
+        bootstrap.bootstrapAdmin(callback);
+    }]
+}, (err) => {
     if (err) {
-        console.log("DB Error: ", err);
+        console.error("DB Error: ", err);
         process.exit(1);
     }
     console.log('MongoDB Connected at', MONGO_DB_URI);
 });
-setTimeout(() => {
-    http.createServer(onRequest).listen(PORT);
-    console.log("Server has started.");
-}, 5000);
+
+console.log(`Server started on port ${PORT}`);
+module.exports = httpServer;

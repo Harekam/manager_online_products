@@ -22,9 +22,8 @@ const registerAdmin = {
                 accessToken
             }, request.payload, (error, success) => {
                 if (error)
-                    return reply(error.response).code(error.statusCode);
-                return reply(success.response).code(success.statusCode);
-
+                    return reply(error);
+                return reply(null, success);
             });
         },
         validate: {
@@ -57,7 +56,7 @@ const loginAdmin = {
             }, request.payload, (error, success) => {
                 if (error)
                     return reply(error);
-                return reply(success);
+                return reply(null, success);
             });
         },
         validate: {
