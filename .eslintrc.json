@@ -63,6 +63,7 @@
     "id-blacklist": "error",
     "id-length": "off",
     "id-match": "error",
+    "no-case-declarations": "off",
     "indent": "off",
     "init-declarations": "warn",
     "jsx-quotes": "error",

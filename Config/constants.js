@@ -110,7 +110,9 @@ const CONTENT_BOUNDS = {
         max: 50
     }
 };
+const DEFAULT_DELIMITERS = ["{", "}"];
 module.exports = {
+    DEFAULT_DELIMITERS,
     CONTENT_BOUNDS,
     PASSWORD_MAX_LEN,
     PHONE_NUM_LEN,
