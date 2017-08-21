@@ -147,7 +147,7 @@ Response:
     
  2. Create Product
     - Path : api/v1/product
-    - Method: GET
+    - Method: POST
     - Sample JSON object required:
 
 
@@ -174,3 +174,72 @@ Response:
              "_id": "599b2d3d84f06ffb8c13491f"
          }
      }
+     
+3. Update product
+    - Path : api/v1/product/:productId
+    - Method: PUT
+    
+ Example:
+ 
+   Path: localhost:8000/api/v1/product/599b2d3d84f06ffb8c13491f
+
+    - Sample JSON object required:
+
+
+    {
+      "productName": "name"
+    }
+
+
+   - Sample JSON object required:
+ 
+ 
+     {
+         "message": "Action complete.",
+         "statusCode": 0,
+         "data": {}
+     }
+
+4. Delete product
+    - Path : api/v1/product/:productId
+    - Method: DELETE
+    
+ Example:
+ 
+   Path: localhost:8000/api/v1/product/599b2d3d84f06ffb8c13491f
+
+   - Sample JSON object required:
+ 
+ 
+     {
+         "message": "Action complete.",
+         "statusCode": 0,
+         "data": {}
+     }
+
+5. Create Admin
+    - Path : api/v1/admin
+    - Method: POST
+    - Sample JSON object required:
+
+
+    {
+      "firstName": "string",
+      "lastName": "string",
+      "email": "email@mail.com",
+      "phoneNumber": "1234567891",
+      "userRole": "ADMIN" <- SUPER_ADMIN or ADMIN
+    }
+
+
+   - Sample JSON object required:
+ 
+ 
+     {
+         "message": "Successfully added.",
+         "statusCode": 0,
+         "data": {
+             "_id": "599b2d3d84f06ffb8c13491f"
+         }
+     }
+     
