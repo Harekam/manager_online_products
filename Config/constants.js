@@ -110,9 +110,19 @@ const CONTENT_BOUNDS = {
         max: 50
     }
 };
-const DEFAULT_DELIMITERS = ["{", "}"];
+const MIME_TYPES = {
+    "html": "text/html",
+    "jpeg": "image/jpeg",
+    "jpg": "image/jpeg",
+    "png": "image/png",
+    "js": "text/javascript",
+    "css": "text/css",
+    "text": "text/plain"
+};
+const DEFAULT_CONTENT_TYPE = "application/json";
 module.exports = {
-    DEFAULT_DELIMITERS,
+    DEFAULT_CONTENT_TYPE,
+    MIME_TYPES,
     CONTENT_BOUNDS,
     PASSWORD_MAX_LEN,
     PHONE_NUM_LEN,
