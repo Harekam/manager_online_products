@@ -4,12 +4,10 @@ Manager Online Products
 [![Build Status](https://travis-ci.org/Harekam/manager_online_products.svg?branch=master)](https://travis-ci.org/Harekam/manager_online_products)
 
 ----------
+### The server is implemented using only core libraries without any framework.
 
-#### [Click here for Swagger Documentation](https://manager-online-products.herokuapp.com/documentation)
+Access link (deployed on heroku) : https://manager-online-products.herokuapp.com
 
- - The Documentation includes all required details for implementation like request, response objects.
- - It also segregates response objects based on success or error with different http codes.
- - One can run the APIs from their only without any third party tools like postman.
  - For authentication JWT bearer tokens are used.
  - Auth Token Pattern(without quotes) : "bearer access_token"
 
@@ -42,6 +40,15 @@ Manager Online Products
 
     npm start
 
+#### Use-Case Diagram of System
+
+![](Images/system_use_case.png?raw=true)
+
+#### Flow Chart of System
+
+![](Images/system_flow_chart.png?raw=true)
+
+
 #### Following are character constraints on some fields in the APIs
  - password
    - min : 6
@@ -62,10 +69,108 @@ Manager Online Products
    - min : 1
    - max : 50
 
-#### Use-Case Diagram of System
+#### List of APIs:
+ 1. Get/Search Product(s)
+    - Path : api/v1/product
+    - Method: GET
+    - Query Parameters Allowed:
+      - productId: string (optional)
+      - searchText: string (optional)
+      - orderBy: enum = [DESC (default), ASC] (optional)
+      - includeDeleted: boolean (default: false) (optional)
+      - limit: number
+      - skip: number
+     
+Response Object on Success: 
+      
 
-![](Images/system_use_case.png?raw=true)
+    {
+      "message": "string",
+      "statusCode": 0,
+      "data": {
+        "totalCount": 0,
+        "products": [
+          {
+            "_id": "string",
+            "updatedAt": "2017-08-21",
+            "createdAt": "2017-08-21",
+            "productName": "string",
+            "description": "string",
+            "totalStock": 0,
+            "price": 0,
+            "discount": 0,
+            "salePrice": 0,
+            "brand": "string",
+            "isDeleted": true,
+            "isAvailable": true,
+            "totalUsersRated": 0,
+            "totalRating": 0,
+            "totalSold": 0
+          }
+        ]
+      }
+    }
 
-#### Flow Chart of System
+Example:
 
-![](Images/system_flow_chart.png?raw=true)
+Request: /api/v1/product?searchText=dum&limit=1&skip=1
+
+Response: 
+
+    {
+        "message": "Action complete.",
+        "statusCode": 0,
+        "data": {
+            "totalCount": 3,
+            "products": [
+                {
+                    "_id": "599b19ac5b9d9bf37d39c557",
+                    "updatedAt": "2017-08-21T17:34:36.912Z",
+                    "createdAt": "2017-08-21T17:34:36.912Z",
+                    "productName": "Dummy Product name",
+                    "description": "some random description",
+                    "totalStock": 10,
+                    "price": 30,
+                    "discount": 0,
+                    "salePrice": 30,
+                    "brand": "VERY HI FI BRAND",
+                    "isDeleted": false,
+                    "isAvailable": true,
+                    "totalUsersRated": 0,
+                    "totalRating": 0,
+                    "totalSold": 0
+                }
+            ]
+        }
+    }
+    
+    
+ 2. Create Product
+    - Path : api/v1/product
+    - Method: GET
+    - Sample JSON object required:
+
+
+    {
+      "productName": "string",
+      "description": "string description dummy", <- optional
+      "totalStock": 30,
+      "totalSold": 20, <- optional
+      "price": 30,
+      "discount": 40, <- optional
+      "salePrice": 20, <- optional
+      "brand": "string",
+      "isAvailable": true <- optional
+    }
+
+
+   - Sample JSON object required:
+ 
+ 
+     {
+         "message": "Successfully added.",
+         "statusCode": 0,
+         "data": {
+             "_id": "599b2d3d84f06ffb8c13491f"
+         }
+     }
