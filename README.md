@@ -12,20 +12,24 @@ Access link (deployed on heroku) : https://manager-online-products.herokuapp.com
  - Auth Token Pattern(without quotes) : "bearer access_token"
 
 #### [Click here for DB Schema](https://manager-online-products.herokuapp.com/dbSchema)
- - In production Mongo Atlas (Database as Service) is used.
  
-#### For running the code locally
+> **Tools/Services Used:**
 
-> **Prerequisite:**
+> - Travis for Continuous Integration(CI)
+> - Mocha (Testing)
+> - Chai (Testing)
+> - Heroku (PaaS)
+> - Mongo Atlas (DBaaS)
+
+#### Deployment Steps Followed:
+ - After pushing code on github, travis validate it.
+ - On Success heroku will deploy it implicitly.
+
+
+> **Prerequisite for running the code locally:**
 
 > - Node.js >= 6.10.x
 > - Mongodb >= 3.4.X
-
-> **Tools Used:**
-
-> - Travis CI
-> - Mocha
-> - Chai
 
 
 #### Command for installing the dependencies
