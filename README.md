@@ -69,20 +69,21 @@ Access link (deployed on heroku) : https://manager-online-products.herokuapp.com
    - min : 1
    - max : 50
 
-#### List of APIs:
- 1. Get/Search Product(s)
-    - Path : api/v1/product
-    - Method: GET
-    - Query Parameters Allowed:
-      - productId: string (optional)
-      - searchText: string (optional)
-      - orderBy: enum = [DESC (default), ASC] (optional)
-      - includeDeleted: boolean (default: false) (optional)
-      - limit: number
-      - skip: number
+### List of APIs:
+
+#### Get/Search Product(s)
+  - Path : **api/v1/product**
+  - Method: **GET**
+  - Query Parameters Allowed:
+    - productId: string (optional)
+    - searchText: string (optional)
+    - orderBy: enum = [DESC (default), ASC] (optional)
+    - includeDeleted: boolean (default: false) (optional)
+    - limit: number
+    - skip: number
      
 Response Object on Success: 
-      
+          
 
     {
       "message": "string",
@@ -113,7 +114,7 @@ Response Object on Success:
 
 Example:
 
-Request: /api/v1/product?searchText=dum&limit=1&skip=1
+Request Path: **/api/v1/product?searchText=dum&limit=1&skip=1**
 
 Response: 
 
@@ -145,101 +146,129 @@ Response:
     }
     
     
- 2. Create Product
-    - Path : api/v1/product
-    - Method: POST
-    - Sample JSON object required:
+#### Create Product
+  - Path : **api/v1/product**
+  - Method: **POST**
+  - Sample JSON object required:
 
 
-    {
-      "productName": "string",
-      "description": "string description dummy", <- optional
-      "totalStock": 30,
-      "totalSold": 20, <- optional
-      "price": 30,
-      "discount": 40, <- optional
-      "salePrice": 20, <- optional
-      "brand": "string",
-      "isAvailable": true <- optional
-    }
+          {
+            "productName": "string",
+            "description": "string description dummy", <- optional
+            "totalStock": 30,
+            "totalSold": 20, <- optional
+            "price": 30,
+            "discount": 40, <- optional
+            "salePrice": 20, <- optional
+            "brand": "string",
+            "isAvailable": true <- optional
+          }
 
 
-   - Sample JSON object required:
+  - Sample JSON object required:
  
  
-     {
+          {
+          "message": "Successfully added.",
+          "statusCode": 0,
+          "data": {
+             "_id": "599b2d3d84f06ffb8c13491f"
+            }
+          }
+     
+#### Update product
+  - Path : **api/v1/product/:productId**
+  - Method: **PUT**
+    
+ Example:
+ 
+   Path: **localhost:8000/api/v1/product/599b2d3d84f06ffb8c13491f**
+
+  - Sample JSON object required:
+
+
+	    {
+	      "productName": "name"
+	    }
+
+
+  - Sample JSON object required:
+ 
+ 
+          {
+         "message": "Action complete.",
+         "statusCode": 0,
+         "data": {}
+          }
+
+#### Delete product
+  - Path : **api/v1/product/:productId**
+  - Method: **DELETE**
+    
+ Example:
+ 
+   Path: **localhost:8000/api/v1/product/599b2d3d84f06ffb8c13491f**
+
+  - Sample JSON object required:
+ 
+ 
+          {
+            "message": "Action complete.",
+            "statusCode": 0,
+            "data": {}
+          }
+
+#### Create Admin
+  - Path : **api/v1/admin**
+  - Method: **POST**
+  - Sample JSON object required:
+
+
+          {
+            "firstName": "string",
+            "lastName": "string",
+            "email": "email@mail.com",
+            "phoneNumber": "1234567891",
+            "userRole": "ADMIN" <- SUPER_ADMIN or ADMIN
+        }
+
+
+  - Sample JSON object required:
+ 
+ 
+          {
          "message": "Successfully added.",
          "statusCode": 0,
          "data": {
              "_id": "599b2d3d84f06ffb8c13491f"
-         }
-     }
+            }
+          }
      
-3. Update product
-    - Path : api/v1/product/:productId
-    - Method: PUT
-    
- Example:
- 
-   Path: localhost:8000/api/v1/product/599b2d3d84f06ffb8c13491f
-
-    - Sample JSON object required:
 
 
-    {
-      "productName": "name"
-    }
 
 
-   - Sample JSON object required:
- 
- 
-     {
-         "message": "Action complete.",
-         "statusCode": 0,
-         "data": {}
-     }
-
-4. Delete product
-    - Path : api/v1/product/:productId
-    - Method: DELETE
-    
- Example:
- 
-   Path: localhost:8000/api/v1/product/599b2d3d84f06ffb8c13491f
-
-   - Sample JSON object required:
- 
- 
-     {
-         "message": "Action complete.",
-         "statusCode": 0,
-         "data": {}
-     }
-
-5. Create Admin
-    - Path : api/v1/admin
-    - Method: POST
-    - Sample JSON object required:
 
 
-    {
-      "firstName": "string",
-      "lastName": "string",
-      "email": "email@mail.com",
-      "phoneNumber": "1234567891",
-      "userRole": "ADMIN" <- SUPER_ADMIN or ADMIN
-    }
 
 
-   - Sample JSON object required:
- 
- 
-     {
-         "message": "Successfully added.",
-         "statusCode": 0,
-         "data": {
-             "_id": "599b2d3d84f06ffb8c13491f"
-         }
-     }
-     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
