@@ -88,6 +88,66 @@ Note: **Standard response is given irrespective of success or error.**
 
 ### List of APIs:
 
+**Base Path: https://manager-online-products.herokuapp.com/**
+
+
+#### Login Admin
+  - Path : **api/v1/admin/login**
+  - Method: **POST**
+  - Auth not required
+  - Sample JSON object required:
+
+
+          {
+            "loginId": "email or phone",
+            "password": "pass"
+          }
+
+
+  - Response JSON:
+ 
+ 
+          {
+            "message": "Logged in successfully.",
+            "statusCode": 0,
+            "data": {
+              "accessToken": "jwt_token"
+            }
+          }
+     
+#### Create Product
+  - Path : **api/v1/product**
+  - Method: **POST**
+  - Auth Required
+  - Scope: Super Admin or Admin
+  - Sample JSON object required:
+
+
+          {
+            "productName": "string",
+            "description": "string description dummy", <- optional
+            "totalStock": 30,
+            "totalSold": 20, <- optional
+            "price": 30,
+            "discount": 40, <- optional
+            "salePrice": 20, <- optional
+            "brand": "string",
+            "isAvailable": true <- optional
+          }
+
+
+  - Response JSON:
+ 
+ 
+          {
+          "message": "Successfully added.",
+          "statusCode": 0,
+          "data": {
+             "_id": "599b2d3d84f06ffb8c13491f"
+            }
+          }
+     
+
 #### Get/Search Product(s)
   - Path : **api/v1/product**
   - Method: **GET**
@@ -165,38 +225,7 @@ Response:
     }
     
     
-#### Create Product
-  - Path : **api/v1/product**
-  - Method: **POST**
-  - Auth Required
-  - Scope: Super Admin or Admin
-  - Sample JSON object required:
 
-
-          {
-            "productName": "string",
-            "description": "string description dummy", <- optional
-            "totalStock": 30,
-            "totalSold": 20, <- optional
-            "price": 30,
-            "discount": 40, <- optional
-            "salePrice": 20, <- optional
-            "brand": "string",
-            "isAvailable": true <- optional
-          }
-
-
-  - Response JSON:
- 
- 
-          {
-          "message": "Successfully added.",
-          "statusCode": 0,
-          "data": {
-             "_id": "599b2d3d84f06ffb8c13491f"
-            }
-          }
-     
 #### Update product
   - Path : **api/v1/product/:productId**
   - Method: **PUT**
@@ -271,32 +300,6 @@ Response:
             }
         }
      
-
-#### Login Admin
-  - Path : **api/v1/admin/login**
-  - Method: **POST**
-  - Auth not required
-  - Sample JSON object required:
-
-
-          {
-            "loginId": "1234567890",
-            "password": "qwerty"
-          }
-
-
-  - Response JSON:
- 
- 
-          {
-            "message": "Logged in successfully.",
-            "statusCode": 0,
-            "data": {
-              "accessToken": "jwt_token"
-            }
-          }
-     
-
 
 
 

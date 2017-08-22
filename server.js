@@ -23,9 +23,16 @@ const {
     PORT
 } = config.serverConfig;
 const MONGO_DB_URI = config.dbConfig.mongodbURI;
-const {authenticate} = require('./Plugins');
+const {
+    authenticate
+} = require('./Plugins');
 const Routes = require('./Routes');
-const {bootstrap, util} = require('./Utilities');
+const {
+    bootstrap,
+    util
+} = require('./Utilities');
+
+//miscellaneous routes
 Routes.push({
     method: 'GET',
     path: '/',
@@ -39,10 +46,23 @@ Routes.push({
     path: '/dbSchema',
     config: {
         handler: function (request, reply) {
-            reply(null, 'db_schema.html', {isFile: true});
+            reply(null, 'db_schema.html', {
+                isFile: true
+            });
+        }
+    }
+}, {
+    method: 'GET',
+    path: '/documentation',
+    config: {
+        handler: function (request, reply) {
+            reply(null, 'documentation.html', {
+                isFile: true
+            });
         }
     }
 });
+
 const routeMap = new Map();
 
 for (let i = 0, len = Routes.length; i < len; i++) {
@@ -187,7 +207,9 @@ function onRequest(request, response) {
                 }
                 if (stats.isFile()) {
                     let mimeType = constants.MIME_TYPES[Path.extname(filePath).split(".").reverse()[0]];
-                    response.writeHead(200, {'Content-Type': mimeType});
+                    response.writeHead(200, {
+                        'Content-Type': mimeType
+                    });
                     fs.createReadStream(filePath).pipe(response);
                 } else {
                     response.writeHead(STATUS_CODE.SERVER_ERROR, {
