@@ -73,7 +73,8 @@ Access link (deployed on heroku) : https://manager-online-products.herokuapp.com
    - min : 1
    - max : 50
 
-Note: **Standard response is given irrespective of success or error.**
+### Important Notes:
+ - Standard response is given irrespective of success or error.
 
         {
           "message": "string",
@@ -81,6 +82,9 @@ Note: **Standard response is given irrespective of success or error.**
           "data": {}
         }
 
+ - Access Token is required to be send in headers under **authorization** key
+
+       "authorization":"bearer access_token"
 #### Standard Http codes are used:
  - Http Code: 200 (on Success)
  - Http Code: 201 (on Success/Creation of new entity)
