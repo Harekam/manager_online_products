@@ -85,6 +85,8 @@ Access link (deployed on heroku) : https://manager-online-products.herokuapp.com
  - Access Token is required to be send in headers under **authorization** key
 
        "authorization":"bearer access_token"
+
+
 #### Standard Http codes are used:
  - Http Code: 200 (on Success)
  - Http Code: 201 (on Success/Creation of new entity)
