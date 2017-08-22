@@ -69,11 +69,30 @@ Access link (deployed on heroku) : https://manager-online-products.herokuapp.com
    - min : 1
    - max : 50
 
+Note: **Standard response is given irrespective of success or error.**
+
+        {
+          "message": "string",
+          "statusCode": 0,
+          "data": {}
+        }
+
+#### Standard Http codes are used:
+ - Http Code: 200 (on Success)
+ - Http Code: 201 (on Success/Creation of new entity)
+ - Http Code: 400 (on Bad Request)
+ - Http Code: 401 (on Unauthorized)
+ - Http Code: 404 (on Not Found)
+ - Http Code: 409 (on Already exists)
+ - Http Code: 500 (on Internal server error)
+
 ### List of APIs:
 
 #### Get/Search Product(s)
   - Path : **api/v1/product**
   - Method: **GET**
+  - Auth Required
+  - Scope: Super Admin or Admin
   - Query Parameters Allowed:
     - productId: string (optional)
     - searchText: string (optional)
@@ -149,6 +168,8 @@ Response:
 #### Create Product
   - Path : **api/v1/product**
   - Method: **POST**
+  - Auth Required
+  - Scope: Super Admin or Admin
   - Sample JSON object required:
 
 
@@ -179,7 +200,9 @@ Response:
 #### Update product
   - Path : **api/v1/product/:productId**
   - Method: **PUT**
-    
+  - Auth Required
+  - Scope: Super Admin or Admin
+
  Example:
  
    Path: **localhost:8000/api/v1/product/599b2d3d84f06ffb8c13491f**
@@ -204,7 +227,9 @@ Response:
 #### Delete product
   - Path : **api/v1/product/:productId**
   - Method: **DELETE**
-    
+  - Auth Required
+  - Scope: Super Admin or Admin
+
  Example:
  
    Path: **localhost:8000/api/v1/product/599b2d3d84f06ffb8c13491f**
@@ -221,6 +246,8 @@ Response:
 #### Create Admin
   - Path : **api/v1/admin**
   - Method: **POST**
+  - Auth Required
+  - Scope: Super Admin
   - Sample JSON object required:
 
 
@@ -237,14 +264,38 @@ Response:
  
  
           {
-         "message": "Successfully added.",
-         "statusCode": 0,
-         "data": {
-             "_id": "599b2d3d84f06ffb8c13491f"
+             "message": "Admin successfully registered.",
+             "statusCode": 0,
+             "data": {
+             "password": "342942"
+            }
+        }
+     
+
+#### Login Admin
+  - Path : **api/v1/admin/login**
+  - Method: **POST**
+  - Auth not required
+  - Sample JSON object required:
+
+
+          {
+            "loginId": "1234567890",
+            "password": "qwerty"
+          }
+
+
+  - Response JSON:
+ 
+ 
+          {
+            "message": "Logged in successfully.",
+            "statusCode": 0,
+            "data": {
+              "accessToken": "jwt_token"
             }
           }
      
-
 
 
 
