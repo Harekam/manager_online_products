@@ -82,6 +82,7 @@ Access link (deployed on heroku) : https://manager-online-products.herokuapp.com
           "data": {}
         }
 
+
  - Access Token is required to be send in headers under **authorization** key
 
        "authorization":"bearer access_token"
