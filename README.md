@@ -85,7 +85,7 @@ Access link (deployed on heroku) : https://manager-online-products.herokuapp.com
 
  - Access Token is required to be send in headers under **authorization** key
 
-       "authorization":"bearer access_token"
+        "authorization":"bearer access_token"
 
 
 #### Standard Http codes are used:
