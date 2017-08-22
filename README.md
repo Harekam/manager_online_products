@@ -8,7 +8,7 @@ Manager Online Products
 
 Access link (deployed on heroku) : https://manager-online-products.herokuapp.com
 
- - For authentication JWT bearer tokens are used.
+ - For authentication JWT tokens are used.
  - Auth Token Pattern(without quotes) : "bearer access_token"
 
 #### [Click here for DB Schema](https://manager-online-products.herokuapp.com/dbSchema)
