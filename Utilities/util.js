@@ -51,12 +51,10 @@ function createErrorResponse(message, statusCode, error, errorCode) {
             if (typeof error === 'object') {
                 if (error.name === 'MongoError') {
                     if (error.code === 11000) {
-                        if (error.message.indexOf("username") != -1) {
-                            message = ERROR_MESSAGES.USERNAME_ALREADY_EXISTS;
+                        if (error.message.indexOf("phoneNumber") != -1) {
+                            message = ERROR_MESSAGES.PHONE_NUMBER_ALREADY_EXISTS;
                         } else if (error.message.indexOf("email") != -1) {
                             message = ERROR_MESSAGES.EMAIL_ALREADY_EXISTS;
-                        } else if (error.message.indexOf("socialId") != -1) {
-                            message = ERROR_MESSAGES.ALREADY_REGISTERED_SOCIAL;
                         } else {
                             message = ERROR_MESSAGES.DUPLICATE_ENTRY;
                         }
