@@ -5,4 +5,4 @@ services:
   - mongodb
 before_script:
   - sleep 15
-  - mongo manager_online_products --eval 'db.addUser("travis", "test");'
+  - mongo manager_online_products --eval 'db.createUser({user:"travis", pwd:"test", roles: [ "readWrite", "dbAdmin" ]});'
