@@ -19,7 +19,7 @@ Access link (deployed on heroku) : https://manager-online-products.herokuapp.com
 > **Prerequisite:**
 
 > - Node.js >= 6.10.x
-> - Mongodb >= 3.2.X
+> - Mongodb >= 3.4.X
 
 > **Tools Used:**
 
@@ -95,11 +95,11 @@ Note: **Standard response is given irrespective of success or error.**
   - Scope: Super Admin or Admin
   - Query Parameters Allowed:
     - productId: string (optional)
-    - searchText: string (optional)
+    - searchText: string (optional) (search on product name)
     - orderBy: enum = [DESC (default), ASC] (optional)
     - includeDeleted: boolean (default: false) (optional)
-    - limit: number
-    - skip: number
+    - limit: number (default: 100) (optional)
+    - skip: number (default: 0) (optional)
      
 Response Object on Success: 
           
