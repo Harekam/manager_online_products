@@ -165,7 +165,7 @@ Response:
           }
 
 
-  - Sample JSON object required:
+  - Response JSON:
  
  
           {
@@ -192,7 +192,7 @@ Response:
 	    }
 
 
-  - Sample JSON object required:
+  - Response JSON:
  
  
           {
@@ -209,7 +209,7 @@ Response:
  
    Path: **localhost:8000/api/v1/product/599b2d3d84f06ffb8c13491f**
 
-  - Sample JSON object required:
+  - Response JSON:
  
  
           {
@@ -233,7 +233,7 @@ Response:
         }
 
 
-  - Sample JSON object required:
+  - Response JSON:
  
  
           {
