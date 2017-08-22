@@ -11,44 +11,28 @@ const ERROR_MESSAGES = CONFIG.RESPONSE_MESSAGES.ERROR_MESSAGES;
 const STATUS_CODE = CONFIG.CONSTANTS.STATUS_CODE;
 const async = require('async');
 
-function failActionFunction(request, reply, source, error) {
-
-    if (error.isBoom) {
-
-        delete error.output.payload.validation;
-        delete error.output.payload.error;
-        delete error.output.payload.statusCode;
-
-        if (error.output.payload.message.indexOf("authorization") !== -1) {
-            error.output.statusCode = STATUS_CODE.UNAUTHORIZED;
-            error.output.payload.message = ERROR_MESSAGES.ACCESS_DENIED;
-            error.output.payload.data = {};
-            // error.output.payload.statusCode = STATUS_CODE.UNAUTHORIZED;
-            return reply(error);
+function failActionFunction(error) {
+    let customErrorMessage = ERROR_MESSAGES.INVALID_DATA;
+    if (error) {
+        if (error.details && error.details[0]) {
+            let details = error.details[0];
+            if (details.message.indexOf("pattern") > -1 && details.message.indexOf("required") > -1 && details.message.indexOf("fails") > -1) {
+                customErrorMessage = "Invalid " + details.path;
+                return customErrorMessage;
+            }
         }
-        let details = error.data.details[0];
-        if (details.message.indexOf("pattern") > -1 && details.message.indexOf("required") > -1 && details.message.indexOf("fails") > -1) {
-            error.output.payload.message = "Invalid " + details.path;
-            error.output.payload.statusCode = 0;
-            return reply(error);
+        if (error.message) {
+            if (error.message.indexOf("[") > -1) {
+                customErrorMessage = error.message.substr(error.message.indexOf("["));
+            } else {
+                customErrorMessage = error.message;
+            }
+            customErrorMessage = customErrorMessage.replace(/"/g, '');
+            customErrorMessage = customErrorMessage.replace('[', '');
+            customErrorMessage = customErrorMessage.replace(']', '');
         }
     }
-    let customErrorMessage = '';
-    if (error.output.payload.message.indexOf("[") > -1) {
-        customErrorMessage = error.output.payload.message.substr(error.output.payload.message.indexOf("["));
-    } else {
-        customErrorMessage = error.output.payload.message;
-    }
-    customErrorMessage = customErrorMessage.replace(/"/g, '');
-    customErrorMessage = customErrorMessage.replace('[', '');
-    customErrorMessage = customErrorMessage.replace(']', '');
-    error.output.payload.message = customErrorMessage;
-    error.output.payload.statusCode = 0;
-    error.output.payload.data = {};
-    delete error.output.payload.validation;
-    delete error.output.payload.error;
-    //delete error.output.payload.statusCode;
-    return reply(error);
+    return customErrorMessage;
 }
 
 function createErrorResponse(message, statusCode, error, errorCode) {
@@ -106,11 +90,14 @@ function createErrorResponse(message, statusCode, error, errorCode) {
 }
 
 function createSuccessResponse(message, statusCode, data, successCode) {
-    if (message)
+    if (_.isObject(message)) {
         if (message.hasOwnProperty('statusCode') && message.hasOwnProperty('response')) {
             message.response.statusCode = message.response.statusCode || 0;
             return message;
         }
+        message = SUCCESS_MESSAGES.ACTION_COMPLETE;
+    }
+
     return {
         response: {
             message: message || SUCCESS_MESSAGES.ACTION_COMPLETE,

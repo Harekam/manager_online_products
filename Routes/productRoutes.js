@@ -7,20 +7,16 @@ const config = require('../Config');
 const constants = config.CONSTANTS;
 const util = require('../Utilities/util');
 const Joi = require('joi');
-const DefaultResponse = config.RESPONSE_MESSAGES.DefaultResponse;
-const {REGEX, CONTENT_BOUNDS} = constants;
-const tags = ['api', 'admin', 'product'];
-const productResponses = require('./productResponses');
-const notes = 'auth token should be in pattern(without quotes): "bearer access_token"';
+const {
+    REGEX,
+    CONTENT_BOUNDS
+} = constants;
 
 const addProduct = {
     method: 'POST',
     path: '/api/v1/product',
     config: {
         auth: 'adminAuth',
-        notes,
-        description: 'add product',
-        tags,
         handler: (request, reply) => {
             const accessToken = request.auth && request.auth.credentials && request.auth.credentials.accessToken || null;
             const userData = request.auth && request.auth.artifacts || null;
@@ -28,12 +24,9 @@ const addProduct = {
                 userData,
                 accessToken
             }, request.payload, (error, success) => {
-
                 if (error)
-                    return reply(error.response).code(error.statusCode);
-
-                return reply(success.response).code(success.statusCode);
-
+                    return reply(error);
+                return reply(null, success);
             });
         },
         validate: {
@@ -50,23 +43,14 @@ const addProduct = {
                 isAvailable: Joi.boolean().default(true)
             },
             failAction: util.failActionFunction
-        },
-        plugins: {
-            'hapi-swagger': {
-                responses: productResponses.createProductSuccessResponse
-            }
         }
-
     }
 };
 const updateProduct = {
     method: 'PUT',
-    path: '/api/v1/product/{productId}',
+    path: '/api/v1/product(/:productId)',
     config: {
         auth: 'adminAuth',
-        notes,
-        description: 'update product',
-        tags,
         handler: (request, reply) => {
             const accessToken = request.auth && request.auth.credentials && request.auth.credentials.accessToken || null;
             const userData = request.auth && request.auth.artifacts || null;
@@ -74,12 +58,9 @@ const updateProduct = {
                 userData,
                 accessToken
             }, Object.assign({}, request.payload, request.params), (error, success) => {
-
                 if (error)
-                    return reply(error.response).code(error.statusCode);
-
-                return reply(success.response).code(success.statusCode);
-
+                    return reply(error);
+                return reply(null, success);
             });
         },
         validate: {
@@ -99,23 +80,15 @@ const updateProduct = {
                 isAvailable: Joi.boolean().optional()
             },
             failAction: util.failActionFunction
-        },
-        plugins: {
-            'hapi-swagger': {
-                responses: new DefaultResponse()
-            }
         }
 
     }
 };
 const deleteProduct = {
     method: 'DELETE',
-    path: '/api/v1/product/{productId}',
+    path: '/api/v1/product(/:productId)',
     config: {
         auth: 'adminAuth',
-        notes,
-        description: 'delete product',
-        tags,
         handler: (request, reply) => {
             const accessToken = request.auth && request.auth.credentials && request.auth.credentials.accessToken || null;
             const userData = request.auth && request.auth.artifacts || null;
@@ -123,12 +96,9 @@ const deleteProduct = {
                 userData,
                 accessToken
             }, request.params, (error, success) => {
-
                 if (error)
-                    return reply(error.response).code(error.statusCode);
-
-                return reply(success.response).code(success.statusCode);
-
+                    return reply(error);
+                return reply(null, success);
             });
         },
         validate: {
@@ -137,13 +107,7 @@ const deleteProduct = {
                 productId: Joi.string().required().trim().regex(REGEX.OBJECT_ID)
             },
             failAction: util.failActionFunction
-        },
-        plugins: {
-            'hapi-swagger': {
-                responses: new DefaultResponse()
-            }
         }
-
     }
 };
 const getProduct = {
@@ -151,9 +115,6 @@ const getProduct = {
     path: '/api/v1/product',
     config: {
         auth: 'adminAuth',
-        notes,
-        description: 'get product',
-        tags,
         handler: (request, reply) => {
             const accessToken = request.auth && request.auth.credentials && request.auth.credentials.accessToken || null;
             const userData = request.auth && request.auth.artifacts || null;
@@ -161,12 +122,9 @@ const getProduct = {
                 userData,
                 accessToken
             }, request.query, (error, success) => {
-
                 if (error)
-                    return reply(error.response).code(error.statusCode);
-
-                return reply(success.response).code(success.statusCode);
-
+                    return reply(error);
+                return reply(null, success);
             });
         },
         validate: {
@@ -183,13 +141,7 @@ const getProduct = {
                 skip: Joi.number().optional().min(0).default(0)
             },
             failAction: util.failActionFunction
-        },
-        plugins: {
-            'hapi-swagger': {
-                responses: productResponses.getProductSuccessResponse
-            }
         }
-
     }
 };
 

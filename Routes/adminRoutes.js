@@ -2,21 +2,18 @@
 const adminController = require('../Controllers').adminController;
 const config = require('../Config');
 const constants = config.CONSTANTS;
-const {REGEX, CONTENT_BOUNDS} = constants;
+const {
+    REGEX,
+    CONTENT_BOUNDS
+} = constants;
 const util = require('../Utilities/util');
 const Joi = require('joi');
-const tags = ['api', 'user'];
-const adminResponses = require('./adminResponses');
-const notes = 'auth token should be in pattern(without quotes): "bearer access_token"';
 
 const registerAdmin = {
     method: 'POST',
     path: '/api/v1/admin',
     config: {
         auth: 'adminAuth',
-        notes,
-        description: 'register new admin',
-        tags,
         handler: (request, reply) => {
             const accessToken = request.auth && request.auth.credentials && request.auth.credentials.accessToken || null;
             const userData = request.auth && request.auth.artifacts || null;
@@ -25,9 +22,8 @@ const registerAdmin = {
                 accessToken
             }, request.payload, (error, success) => {
                 if (error)
-                    return reply(error.response).code(error.statusCode);
-                return reply(success.response).code(success.statusCode);
-
+                    return reply(error);
+                return reply(null, success);
             });
         },
         validate: {
@@ -43,13 +39,7 @@ const registerAdmin = {
                 )
             },
             failAction: util.failActionFunction
-        },
-        plugins: {
-            'hapi-swagger': {
-                responses: adminResponses.registerSuccessResponse
-            }
         }
-
     }
 };
 
@@ -57,8 +47,6 @@ const loginAdmin = {
     method: 'POST',
     path: '/api/v1/admin/login',
     config: {
-        description: 'loginAdmin',
-        tags,
         handler: (request, reply) => {
             const accessToken = request.auth && request.auth.credentials && request.auth.credentials.accessToken || null;
             const userData = request.auth && request.auth.artifacts || null;
@@ -66,12 +54,9 @@ const loginAdmin = {
                 userData,
                 accessToken
             }, request.payload, (error, success) => {
-
                 if (error)
-                    return reply(error.response).code(error.statusCode);
-
-                return reply(success.response).code(success.statusCode);
-
+                    return reply(error);
+                return reply(null, success);
             });
         },
         validate: {
@@ -80,13 +65,7 @@ const loginAdmin = {
                 password: Joi.string().required().trim().min(CONTENT_BOUNDS.password.min).max(CONTENT_BOUNDS.password.max)
             },
             failAction: util.failActionFunction
-        },
-        plugins: {
-            'hapi-swagger': {
-                responses: adminResponses.loginSuccessResponse
-            }
         }
-
     }
 };
 module.exports = [

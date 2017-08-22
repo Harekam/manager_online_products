@@ -4,12 +4,10 @@ Manager Online Products
 [![Build Status](https://travis-ci.org/Harekam/manager_online_products.svg?branch=master)](https://travis-ci.org/Harekam/manager_online_products)
 
 ----------
+### The server is implemented using only core libraries without any framework.
 
-#### [Click here for Swagger Documentation](https://manager-online-products.herokuapp.com/documentation)
+Access link (deployed on heroku) : https://manager-online-products.herokuapp.com
 
- - The Documentation includes all required details for implementation like request, response objects.
- - It also segregates response objects based on success or error with different http codes.
- - One can run the APIs from their only without any third party tools like postman.
  - For authentication JWT bearer tokens are used.
  - Auth Token Pattern(without quotes) : "bearer access_token"
 
@@ -21,7 +19,7 @@ Manager Online Products
 > **Prerequisite:**
 
 > - Node.js >= 6.10.x
-> - Mongodb >= 3.2.X
+> - Mongodb >= 3.4.X
 
 > **Tools Used:**
 
@@ -41,6 +39,15 @@ Manager Online Products
 #### Command for running the server
 
     npm start
+
+#### Use-Case Diagram of System
+
+![](Images/system_use_case.png?raw=true)
+
+#### Flow Chart of System
+
+![](Images/system_flow_chart.png?raw=true)
+
 
 #### Following are character constraints on some fields in the APIs
  - password
@@ -62,10 +69,257 @@ Manager Online Products
    - min : 1
    - max : 50
 
-#### Use-Case Diagram of System
+Note: **Standard response is given irrespective of success or error.**
 
-![](Images/system_use_case.png?raw=true)
+        {
+          "message": "string",
+          "statusCode": 0,
+          "data": {}
+        }
 
-#### Flow Chart of System
+#### Standard Http codes are used:
+ - Http Code: 200 (on Success)
+ - Http Code: 201 (on Success/Creation of new entity)
+ - Http Code: 400 (on Bad Request)
+ - Http Code: 401 (on Unauthorized)
+ - Http Code: 404 (on Not Found)
+ - Http Code: 409 (on Already exists)
+ - Http Code: 500 (on Internal server error)
 
-![](Images/system_flow_chart.png?raw=true)
+### List of APIs:
+
+#### Get/Search Product(s)
+  - Path : **api/v1/product**
+  - Method: **GET**
+  - Auth Required
+  - Scope: Super Admin or Admin
+  - Query Parameters Allowed:
+    - productId: string (optional)
+    - searchText: string (optional) (search on product name)
+    - orderBy: enum = [DESC (default), ASC] (optional)
+    - includeDeleted: boolean (default: false) (optional)
+    - limit: number (default: 100) (optional)
+    - skip: number (default: 0) (optional)
+     
+Response Object on Success: 
+          
+
+    {
+      "message": "string",
+      "statusCode": 0,
+      "data": {
+        "totalCount": 0,
+        "products": [
+          {
+            "_id": "string",
+            "updatedAt": "2017-08-21",
+            "createdAt": "2017-08-21",
+            "productName": "string",
+            "description": "string",
+            "totalStock": 0,
+            "price": 0,
+            "discount": 0,
+            "salePrice": 0,
+            "brand": "string",
+            "isDeleted": true,
+            "isAvailable": true,
+            "totalUsersRated": 0,
+            "totalRating": 0,
+            "totalSold": 0
+          }
+        ]
+      }
+    }
+
+Example:
+
+Request Path: **/api/v1/product?searchText=dum&limit=1&skip=1**
+
+Response: 
+
+    {
+        "message": "Action complete.",
+        "statusCode": 0,
+        "data": {
+            "totalCount": 3,
+            "products": [
+                {
+                    "_id": "599b19ac5b9d9bf37d39c557",
+                    "updatedAt": "2017-08-21T17:34:36.912Z",
+                    "createdAt": "2017-08-21T17:34:36.912Z",
+                    "productName": "Dummy Product name",
+                    "description": "some random description",
+                    "totalStock": 10,
+                    "price": 30,
+                    "discount": 0,
+                    "salePrice": 30,
+                    "brand": "VERY HI FI BRAND",
+                    "isDeleted": false,
+                    "isAvailable": true,
+                    "totalUsersRated": 0,
+                    "totalRating": 0,
+                    "totalSold": 0
+                }
+            ]
+        }
+    }
+    
+    
+#### Create Product
+  - Path : **api/v1/product**
+  - Method: **POST**
+  - Auth Required
+  - Scope: Super Admin or Admin
+  - Sample JSON object required:
+
+
+          {
+            "productName": "string",
+            "description": "string description dummy", <- optional
+            "totalStock": 30,
+            "totalSold": 20, <- optional
+            "price": 30,
+            "discount": 40, <- optional
+            "salePrice": 20, <- optional
+            "brand": "string",
+            "isAvailable": true <- optional
+          }
+
+
+  - Response JSON:
+ 
+ 
+          {
+          "message": "Successfully added.",
+          "statusCode": 0,
+          "data": {
+             "_id": "599b2d3d84f06ffb8c13491f"
+            }
+          }
+     
+#### Update product
+  - Path : **api/v1/product/:productId**
+  - Method: **PUT**
+  - Auth Required
+  - Scope: Super Admin or Admin
+
+ Example:
+ 
+   Path: **localhost:8000/api/v1/product/599b2d3d84f06ffb8c13491f**
+
+  - Sample JSON object required:
+
+
+	    {
+	      "productName": "name"
+	    }
+
+
+  - Response JSON:
+ 
+ 
+          {
+         "message": "Action complete.",
+         "statusCode": 0,
+         "data": {}
+          }
+
+#### Delete product
+  - Path : **api/v1/product/:productId**
+  - Method: **DELETE**
+  - Auth Required
+  - Scope: Super Admin or Admin
+
+ Example:
+ 
+   Path: **localhost:8000/api/v1/product/599b2d3d84f06ffb8c13491f**
+
+  - Response JSON:
+ 
+ 
+          {
+            "message": "Action complete.",
+            "statusCode": 0,
+            "data": {}
+          }
+
+#### Create Admin
+  - Path : **api/v1/admin**
+  - Method: **POST**
+  - Auth Required
+  - Scope: Super Admin
+  - Sample JSON object required:
+
+
+          {
+            "firstName": "string",
+            "lastName": "string",
+            "email": "email@mail.com",
+            "phoneNumber": "1234567891",
+            "userRole": "ADMIN" <- SUPER_ADMIN or ADMIN
+        }
+
+
+  - Response JSON:
+ 
+ 
+          {
+             "message": "Admin successfully registered.",
+             "statusCode": 0,
+             "data": {
+             "password": "342942"
+            }
+        }
+     
+
+#### Login Admin
+  - Path : **api/v1/admin/login**
+  - Method: **POST**
+  - Auth not required
+  - Sample JSON object required:
+
+
+          {
+            "loginId": "1234567890",
+            "password": "qwerty"
+          }
+
+
+  - Response JSON:
+ 
+ 
+          {
+            "message": "Logged in successfully.",
+            "statusCode": 0,
+            "data": {
+              "accessToken": "jwt_token"
+            }
+          }
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

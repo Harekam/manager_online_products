@@ -6,8 +6,6 @@ const async = require('async');
 const Services = require('../Services');
 const Config = require('../Config');
 const util = require('./util');
-const log4js = require('log4js');
-const logger = log4js.getLogger('[BOOTSTRAP]');
 
 exports.bootstrapAdmin = function (callbackParent) {
     const adminData = Config.bootstrapAdmin;
@@ -25,13 +23,15 @@ function insertData(adminData, callbackParent) {
             Services.adminService.getAdminDataByEmail(adminData, callback);
         },
         function (result, callback) {
-            if (!util.isEmpty(result))
+            if (!util.isEmpty(result)) {
+                console.log("Bootstrap success");
                 return callback(null);
+            }
             Services.adminService.addNewAdmin(Object.assign({}, adminData, {password}), function (error) {
                 if (error)
-                    logger.error("Bootstrapping error for " + adminData.phoneNumber);
+                    console.error("Bootstrapping error for " + adminData.phoneNumber);
                 else
-                    logger.warn('Bootstrapping finished for ' + adminData.phoneNumber);
+                    console.log('Bootstrapping finished for ' + adminData.phoneNumber);
                 return callback(null);
             });
         }
